@@ -18,7 +18,8 @@ import {
 } from 'lucide-react';
 import { Button, Loading, Modal, Textarea, useToast, useConfirm, MaterialSelector } from '@/components/shared';
 import { MaterialGeneratorModal } from '@/components/shared/MaterialGeneratorModal';
-import { TemplateSelector } from '@/components/shared/TemplateSelector';
+import { TemplateSelector, getTemplateFile } from '@/components/shared/TemplateSelector';
+import { listUserTemplates, type UserTemplate } from '@/api/endpoints';
 import { materialUrlToFile } from '@/components/shared/MaterialSelector';
 import type { Material } from '@/api/endpoints';
 import { SlideCard } from '@/components/preview/SlideCard';
@@ -74,6 +75,7 @@ export const SlidePreview: React.FC = () => {
   // 素材生成模态开关（模块本身可复用，这里只是示例入口）
   const [isMaterialModalOpen, setIsMaterialModalOpen] = useState(false);
   // 素材选择器模态开关
+  const [userTemplates, setUserTemplates] = useState<UserTemplate[]>([]);
   const [isMaterialSelectorOpen, setIsMaterialSelectorOpen] = useState(false);
   // 每页编辑参数缓存（前端会话内缓存，便于重复执行）
   const [editContextByPage, setEditContextByPage] = useState<Record<string, {
@@ -94,12 +96,25 @@ export const SlidePreview: React.FC = () => {
   const { show, ToastContainer } = useToast();
   const { confirm, ConfirmDialog } = useConfirm();
 
-  // 加载项目数据
+  // 加载项目数据 & 用户模板
   useEffect(() => {
     if (projectId && (!currentProject || currentProject.id !== projectId)) {
       // 直接使用 projectId 同步项目数据
       syncProject(projectId);
     }
+    
+    // 加载用户模板列表（用于按需获取File）
+    const loadTemplates = async () => {
+      try {
+        const response = await listUserTemplates();
+        if (response.data?.templates) {
+          setUserTemplates(response.data.templates);
+        }
+      } catch (error) {
+        console.error('加载用户模板失败:', error);
+      }
+    };
+    loadTemplates();
   }, [projectId, currentProject, syncProject]);
 
   // 当项目加载后，初始化额外要求
@@ -543,35 +558,37 @@ export const SlidePreview: React.FC = () => {
   const handleTemplateSelect = async (templateFile: File | null, templateId?: string) => {
     if (!projectId) return;
     
-    // 如果传入了 templateId 但没有 templateFile，说明是用户模板，需要先获取文件
-    if (templateId && !templateFile) {
-      // 这种情况不应该发生，因为 handleSelectUserTemplate 会先获取文件
-      return;
+    // 如果有templateId，按需加载File
+    let file = templateFile;
+    if (templateId && !file) {
+      file = await getTemplateFile(templateId, userTemplates);
+      if (!file) {
+        show({ message: '加载模板失败', type: 'error' });
+        return;
+      }
     }
     
-    if (!templateFile) {
+    if (!file) {
       // 如果没有文件也没有 ID，可能是取消选择
       return;
     }
     
     setIsUploadingTemplate(true);
     try {
-      await uploadTemplate(projectId, templateFile);
+      await uploadTemplate(projectId, file);
       await syncProject(projectId);
       setIsTemplateModalOpen(false);
       show({ message: '模板更换成功', type: 'success' });
       
       // 更新选择状态
       if (templateId) {
-        // 判断是用户模板还是预设模板
-        if (templateId.startsWith('user-') || templateId.length > 10) {
-          // 用户模板 ID 通常较长
-          setSelectedTemplateId(templateId);
-          setSelectedPresetTemplateId(null);
-        } else {
-          // 预设模板 ID 通常是 '1', '2', '3' 等
+        // 判断是用户模板还是预设模板（短ID通常是预设模板）
+        if (templateId.length <= 3 && /^\d+$/.test(templateId)) {
           setSelectedPresetTemplateId(templateId);
           setSelectedTemplateId(null);
+        } else {
+          setSelectedTemplateId(templateId);
+          setSelectedPresetTemplateId(null);
         }
       }
     } catch (error: any) {

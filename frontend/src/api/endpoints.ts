@@ -388,7 +388,7 @@ export const generateMaterialImage = async (
  * 素材信息接口
  */
 export interface Material {
-  id?: string;
+  id: string;
   project_id?: string | null;
   filename: string;
   url: string;

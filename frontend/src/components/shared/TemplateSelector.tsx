@@ -32,6 +32,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
   const [isMaterialSelectorOpen, setIsMaterialSelectorOpen] = useState(false);
   const [deletingTemplateId, setDeletingTemplateId] = useState<string | null>(null);
+  const [saveToLibrary, setSaveToLibrary] = useState(true); // 上传模板时是否保存到模板库（默认勾选）
   const { show, ToastContainer } = useToast();
 
   // 加载用户模板列表
@@ -58,7 +59,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
     if (file) {
       try {
         if (showUpload) {
-          // 上传到用户模板库
+          // 主页模式：直接上传到用户模板库
           const response = await uploadUserTemplate(file);
           if (response.data) {
             const template = response.data;
@@ -67,8 +68,20 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
             show({ message: '模板上传成功', type: 'success' });
           }
         } else {
-          // 直接选择文件，不上传到模板库，直接调用 onSelect
-          onSelect(file);
+          // 预览页模式：根据 saveToLibrary 状态决定是否保存到模板库
+          if (saveToLibrary) {
+            // 保存到模板库并应用
+            const response = await uploadUserTemplate(file);
+            if (response.data) {
+              const template = response.data;
+              setUserTemplates(prev => [template, ...prev]);
+              onSelect(file, template.template_id);
+              show({ message: '模板已保存到模板库', type: 'success' });
+            }
+          } else {
+            // 仅应用到项目
+            onSelect(file);
+          }
         }
       } catch (error: any) {
         console.error('上传模板失败:', error);
@@ -79,43 +92,40 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
     e.target.value = '';
   };
 
-  const handleSelectUserTemplate = async (template: UserTemplate) => {
-    try {
-      // 从用户模板创建 File 对象
-      const imageUrl = getImageUrl(template.template_image_url);
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], 'template.png', { type: blob.type });
-      onSelect(file, template.template_id);
-    } catch (error) {
-      console.error('加载模板失败:', error);
-      show({ message: '加载模板失败', type: 'error' });
-    }
+  const handleSelectUserTemplate = (template: UserTemplate) => {
+    // 立即更新选择状态（不加载File，提升响应速度）
+    onSelect(null, template.template_id);
   };
 
-  const handleSelectPresetTemplate = async (templateId: string, preview: string) => {
+  const handleSelectPresetTemplate = (templateId: string, preview: string) => {
     if (!preview) return;
-    
-    try {
-      // 从 public 文件夹加载图片并转换为 File 对象
-      const response = await fetch(preview);
-      const blob = await response.blob();
-      const file = new File([blob], preview.split('/').pop() || 'template.png', { type: blob.type });
-      onSelect(file, templateId);
-    } catch (error) {
-      console.error('加载预设模板失败:', error);
-      show({ message: '加载模板失败', type: 'error' });
-    }
+    // 立即更新选择状态（不加载File，提升响应速度）
+    onSelect(null, templateId);
   };
 
-  const handleSelectMaterials = async (materials: Material[]) => {
+  const handleSelectMaterials = async (materials: Material[], saveAsTemplate?: boolean) => {
     if (materials.length === 0) return;
     
     try {
-      // 将第一个素材转换为File对象并选择为模板
+      // 将第一个素材转换为File对象
       const file = await materialUrlToFile(materials[0]);
-      onSelect(file);
-      show({ message: '已从素材库选择作为模板', type: 'success' });
+      
+      // 根据 saveAsTemplate 参数决定是否保存到模板库
+      if (saveAsTemplate) {
+        // 保存到用户模板库
+        const response = await uploadUserTemplate(file);
+        if (response.data) {
+          const template = response.data;
+          setUserTemplates(prev => [template, ...prev]);
+          // 传递文件和模板ID，适配不同的使用场景
+          onSelect(file, template.template_id);
+          show({ message: '素材已保存到模板库', type: 'success' });
+        }
+      } else {
+        // 仅作为模板使用
+        onSelect(file);
+        show({ message: '已从素材库选择作为模板', type: 'success' });
+      }
     } catch (error: any) {
       console.error('加载素材失败:', error);
       show({ message: '加载素材失败: ' + (error.message || '未知错误'), type: 'error' });
@@ -235,6 +245,23 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               />
             </label>
           </div>
+          
+          {/* 在预览页显示：上传模板时是否保存到模板库的选项 */}
+          {!showUpload && (
+            <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={saveToLibrary}
+                  onChange={(e) => setSaveToLibrary(e.target.checked)}
+                  className="w-4 h-4 text-banana-500 border-gray-300 rounded focus:ring-banana-500"
+                />
+                <span className="text-sm text-gray-700">
+                  上传模板时同时保存到我的模板库
+                </span>
+              </label>
+            </div>
+          )}
         </div>
 
         {/* 从素材库选择作为模板 */}
@@ -262,9 +289,50 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           onClose={() => setIsMaterialSelectorOpen(false)}
           onSelect={handleSelectMaterials}
           multiple={false}
+          showSaveAsTemplateOption={true}
         />
       )}
     </>
   );
+};
+
+/**
+ * 根据模板ID获取模板File对象（按需加载）
+ * @param templateId 模板ID
+ * @param userTemplates 用户模板列表
+ * @returns Promise<File | null>
+ */
+export const getTemplateFile = async (
+  templateId: string,
+  userTemplates: UserTemplate[]
+): Promise<File | null> => {
+  // 检查是否是预设模板
+  const presetTemplate = presetTemplates.find(t => t.id === templateId);
+  if (presetTemplate && presetTemplate.preview) {
+    try {
+      const response = await fetch(presetTemplate.preview);
+      const blob = await response.blob();
+      return new File([blob], presetTemplate.preview.split('/').pop() || 'template.png', { type: blob.type });
+    } catch (error) {
+      console.error('加载预设模板失败:', error);
+      return null;
+    }
+  }
+
+  // 检查是否是用户模板
+  const userTemplate = userTemplates.find(t => t.template_id === templateId);
+  if (userTemplate) {
+    try {
+      const imageUrl = getImageUrl(userTemplate.template_image_url);
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      return new File([blob], 'template.png', { type: blob.type });
+    } catch (error) {
+      console.error('加载用户模板失败:', error);
+      return null;
+    }
+  }
+
+  return null;
 };
 

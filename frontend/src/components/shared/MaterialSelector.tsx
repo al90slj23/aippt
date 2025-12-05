@@ -10,9 +10,10 @@ interface MaterialSelectorProps {
   projectId?: string; // 可选，如果不提供则使用全局接口
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (materials: Material[]) => void;
+  onSelect: (materials: Material[], saveAsTemplate?: boolean) => void;
   multiple?: boolean; // 是否支持多选
   maxSelection?: number; // 最大选择数量
+  showSaveAsTemplateOption?: boolean; // 是否显示"保存为模板"选项
 }
 
 /**
@@ -31,6 +32,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
   onSelect,
   multiple = false,
   maxSelection,
+  showSaveAsTemplateOption = false,
 }) => {
   const { show } = useToast();
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -42,6 +44,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectsLoaded, setProjectsLoaded] = useState(false);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
+  const [saveAsTemplate, setSaveAsTemplate] = useState(true); // 默认勾选：保存为模板
 
   // 当 projectId 变化时，更新 filterProjectId
   useEffect(() => {
@@ -73,7 +76,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
     }
   };
 
-  const getMaterialKey = (m: Material) => m.id || m.url;
+  const getMaterialKey = (m: Material): string => m.id;
   const getMaterialDisplayName = (m: Material) =>
     (m.prompt && m.prompt.trim()) ||
     (m.name && m.name.trim()) ||
@@ -130,7 +133,8 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
       show({ message: '请至少选择一个素材', type: 'info' });
       return;
     }
-    onSelect(selected);
+    // 如果启用了保存为模板选项，传递saveAsTemplate状态
+    onSelect(selected, showSaveAsTemplateOption ? saveAsTemplate : undefined);
     onClose();
   };
 
@@ -151,10 +155,8 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
 
     setIsUploading(true);
     try {
-      // 使用当前筛选的项目ID，如果是 'all' 则使用传入的 projectId 或 null
-      const targetProjectId = filterProjectId === 'all' 
-        ? (projectId || null)
-        : filterProjectId === 'none'
+      // 简化上传逻辑：在 'all' 或 'none' 筛选时上传为全局素材（不关联项目）
+      const targetProjectId = (filterProjectId === 'all' || filterProjectId === 'none')
         ? null
         : filterProjectId;
 
@@ -329,7 +331,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
             {materials.map((material) => {
               const key = getMaterialKey(material);
               const isSelected = selectedMaterials.has(key);
-              const isDeleting = material.id ? deletingIds.has(material.id) : false;
+              const isDeleting = deletingIds.has(material.id);
               return (
                 <div
                   key={key}
@@ -373,17 +375,36 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
           )}
 
           {/* 底部操作 */}
-          <div className="flex justify-end gap-3 pt-4 border-t">
-            <Button variant="ghost" onClick={onClose}>
-              取消
-            </Button>
-            <Button
-              variant="primary"
-              onClick={handleConfirm}
-              disabled={selectedMaterials.size === 0}
-            >
-              确认选择 ({selectedMaterials.size})
-            </Button>
+          <div className="pt-4 border-t">
+            {/* 保存为模板选项 */}
+            {showSaveAsTemplateOption && (
+              <div className="mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={saveAsTemplate}
+                    onChange={(e) => setSaveAsTemplate(e.target.checked)}
+                    className="w-4 h-4 text-banana-500 border-gray-300 rounded focus:ring-banana-500"
+                  />
+                  <span className="text-sm text-gray-700">
+                    同时保存到我的模板库
+                  </span>
+                </label>
+              </div>
+            )}
+            
+            <div className="flex justify-end gap-3">
+              <Button variant="ghost" onClick={onClose}>
+                取消
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleConfirm}
+                disabled={selectedMaterials.size === 0}
+              >
+                确认选择 ({selectedMaterials.size})
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>

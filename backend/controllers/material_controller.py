@@ -334,13 +334,17 @@ def delete_material(material_id):
         file_service = FileService(current_app.config['UPLOAD_FOLDER'])
         material_path = Path(file_service.get_absolute_path(material.relative_path))
 
-        # First, commit the deletion from the database to ensure data consistency
+        # First, delete the database record to ensure data consistency
         db.session.delete(material)
         db.session.commit()
 
-        # Then, delete the file from the filesystem
-        if material_path.exists():
-            material_path.unlink(missing_ok=True)
+        # Then, attempt to delete the file. If this fails, log the error
+        # but still return a success response. This leaves an orphan file,
+        try:
+            if material_path.exists():
+                material_path.unlink(missing_ok=True)
+        except OSError as e:
+            current_app.logger.warning(f"Failed to delete file for material {material_id} at {material_path}: {e}")
 
         return success_response({"id": material_id})
     except Exception as e:
