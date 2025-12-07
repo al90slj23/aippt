@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Sparkles, FileText, FileEdit, ImagePlus, Paperclip, Palette, Lightbulb } from 'lucide-react';
 import { Button, Textarea, Card, useToast, MaterialGeneratorModal, ReferenceFileList, ReferenceFileSelector, FilePreviewModal } from '@/components/shared';
 import { TemplateSelector, getTemplateFile } from '@/components/shared/TemplateSelector';
-import { listUserTemplates, type UserTemplate, uploadReferenceFile, type ReferenceFile, associateFileToProject } from '@/api/endpoints';
+import { listUserTemplates, type UserTemplate, uploadReferenceFile, type ReferenceFile, associateFileToProject, triggerFileParse } from '@/api/endpoints';
 import { useProjectStore } from '@/store/useProjectStore';
 
 type CreationType = 'idea' | 'outline' | 'description';
@@ -103,8 +103,31 @@ export const Home: React.FC = () => {
       // 在 Home 页面，始终上传为全局文件
       const response = await uploadReferenceFile(file, null);
       if (response?.data?.file) {
-        setReferenceFiles(prev => [...prev, response.data!.file]);
+        const uploadedFile = response.data.file;
+        setReferenceFiles(prev => [...prev, uploadedFile]);
         show({ message: '文件上传成功', type: 'success' });
+        
+        // 如果文件状态为 pending，自动触发解析
+        if (uploadedFile.parse_status === 'pending') {
+          try {
+            const parseResponse = await triggerFileParse(uploadedFile.id);
+            // 使用解析接口返回的文件对象更新状态
+            if (parseResponse?.data?.file) {
+              const parsedFile = parseResponse.data.file;
+              setReferenceFiles(prev => 
+                prev.map(f => f.id === uploadedFile.id ? parsedFile : f)
+              );
+            } else {
+              // 如果没有返回文件对象，手动更新状态为 parsing（异步线程会稍后更新）
+              setReferenceFiles(prev => 
+                prev.map(f => f.id === uploadedFile.id ? { ...f, parse_status: 'parsing' as const } : f)
+              );
+            }
+          } catch (parseError: any) {
+            console.error('触发文件解析失败:', parseError);
+            // 解析触发失败不影响上传成功提示
+          }
+        }
       } else {
         show({ message: '文件上传失败：未返回文件信息', type: 'error' });
       }
