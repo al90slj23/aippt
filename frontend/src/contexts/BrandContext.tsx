@@ -32,10 +32,10 @@ export function BrandProvider({ children }: { children: React.ReactNode }) {
   const loadBrandSettings = async () => {
     try {
       const response = await apiClient.get('/api/settings/brand');
-      setBrandSettings(response.data);
+      setBrandSettings(response.data.data);
       
       // 更新页面标题
-      document.title = `${response.data.brand_name} | AI 原生 PPT 生成器`;
+      document.title = `${response.data.data.brand_name} | AI 原生 PPT 生成器`;
     } catch (error) {
       console.error('Failed to load brand settings:', error);
       // 使用默认值
