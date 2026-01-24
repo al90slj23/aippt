@@ -15,8 +15,11 @@ export default defineConfig(({ mode }) => {
   // 使用 loadEnv 加载环境变量（第三个参数为空字符串表示加载所有变量，不仅仅是 VITE_ 前缀的）
   const env = loadEnv(mode, envDir, '')
   
-  // 读取后端端口，默认 5000
-  const backendPort = env.BACKEND_PORT || '5000'
+  // 读取 API 基础 URL，如果设置了则使用远程 API，否则使用本地后端
+  const apiBaseUrl = env.VITE_API_BASE_URL
+  
+  // 读取后端端口，默认 5001（避免与 macOS AirPlay 冲突）
+  const backendPort = env.BACKEND_PORT || '5001'
   const backendUrl = `http://localhost:${backendPort}`
   
   return {
@@ -28,7 +31,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 3000,
+      port: 5173,
       host: true, // 监听所有地址
       watch: {
         usePolling: true, // WSL 环境下需要启用轮询
@@ -36,18 +39,33 @@ export default defineConfig(({ mode }) => {
       hmr: {
         overlay: true, // 显示错误覆盖层
       },
-      proxy: {
-        // API 请求代理到后端（端口从环境变量 BACKEND_PORT 读取）
+      proxy: apiBaseUrl ? {
+        // 使用远程 API
+        '/api': {
+          target: apiBaseUrl,
+          changeOrigin: true,
+          secure: false,
+        },
+        '/files': {
+          target: apiBaseUrl,
+          changeOrigin: true,
+          secure: false,
+        },
+        '/health': {
+          target: apiBaseUrl,
+          changeOrigin: true,
+          secure: false,
+        },
+      } : {
+        // 使用本地后端
         '/api': {
           target: backendUrl,
           changeOrigin: true,
         },
-        // 文件服务代理到后端
         '/files': {
           target: backendUrl,
           changeOrigin: true,
         },
-        // 健康检查代理到后端
         '/health': {
           target: backendUrl,
           changeOrigin: true,

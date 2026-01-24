@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Home } from './pages/Home';
+import { HomeSimple } from './pages/HomeSimple';
+import { CreateProject } from './pages/CreateProject';
 import { History } from './pages/History';
 import { OutlineEditor } from './pages/OutlineEditor';
 import { DetailEditor } from './pages/DetailEditor';
 import { SlidePreview } from './pages/SlidePreview';
-import { SettingsPage } from './pages/Settings';
 import Admin from './pages/Admin';
 import { useProjectStore } from './store/useProjectStore';
 import { useToast } from './components/shared';
@@ -35,7 +35,8 @@ function App() {
     <BrandProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomeSimple />} />
+          <Route path="/create" element={<CreateProject />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Navigate to="/admin" replace />} />
           <Route path="/admin" element={<Admin />} />

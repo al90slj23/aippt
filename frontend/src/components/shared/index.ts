@@ -22,6 +22,7 @@ export { ImagePreviewList } from './ImagePreviewList';
 export { ProjectResourcesList } from './ProjectResourcesList';
 export { ProjectSettingsModal } from './ProjectSettingsModal';
 export { ExportTasksPanel } from './ExportTasksPanel';
+export { ProgressSteps } from './ProgressSteps';
 
 
 

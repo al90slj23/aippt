@@ -1,0 +1,20 @@
+
+> banana-slides-frontend@0.1.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 249 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://169.254.188.137:3000/
+  ➜  Network: http://192.168.1.236:3000/
+  ➜  Network: http://192.168.50.236:3000/
+  ➜  Network: http://198.18.0.1:3000/
+18:16:27 [vite] vite.config.ts changed, restarting server...
+18:16:28 [vite] server restarted.
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://169.254.188.137:5173/
+  ➜  Network: http://192.168.1.236:5173/
+  ➜  Network: http://192.168.50.236:5173/
+  ➜  Network: http://198.18.0.1:5173/

@@ -1,0 +1,22 @@
+2026-01-24 18:13:06,270 [WARNING] root - Could not load settings from database: (sqlite3.OperationalError) no such column: settings.brand_logo_url
+[SQL: SELECT settings.id AS settings_id, settings.ai_provider_format AS settings_ai_provider_format, settings.api_base_url AS settings_api_base_url, settings.api_key AS settings_api_key, settings.image_resolution AS settings_image_resolution, settings.image_aspect_ratio AS settings_image_aspect_ratio, settings.max_description_workers AS settings_max_description_workers, settings.max_image_workers AS settings_max_image_workers, settings.text_model AS settings_text_model, settings.image_model AS settings_image_model, settings.mineru_api_base AS settings_mineru_api_base, settings.mineru_token AS settings_mineru_token, settings.image_caption_model AS settings_image_caption_model, settings.output_language AS settings_output_language, settings.enable_text_reasoning AS settings_enable_text_reasoning, settings.text_thinking_budget AS settings_text_thinking_budget, settings.enable_image_reasoning AS settings_enable_image_reasoning, settings.image_thinking_budget AS settings_image_thinking_budget, settings.baidu_ocr_api_key AS settings_baidu_ocr_api_key, settings.brand_name AS settings_brand_name, settings.brand_slogan AS settings_brand_slogan, settings.brand_description AS settings_brand_description, settings.brand_logo_url AS settings_brand_logo_url, settings.brand_favicon_url AS settings_brand_favicon_url, settings.admin_password_hash AS settings_admin_password_hash, settings.created_at AS settings_created_at, settings.updated_at AS settings_updated_at 
+FROM settings
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-01-24 18:13:06,271 [INFO] root - 
+╔══════════════════════════════════════╗
+║   🍌 Banana Slides API Server 🍌   ║
+╚══════════════════════════════════════╝
+Server starting on: http://localhost:5000
+Output Language: zh
+Environment: development
+Debug mode: True
+API Base URL: http://localhost:5000/api
+Database: sqlite:////Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/backend/instance/database.db
+Uploads: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/uploads
+ * Serving Flask app 'app'
+ * Debug mode: on
+Address already in use
+Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.
+On macOS, try searching for and disabling 'AirPlay Receiver' in System Settings.
