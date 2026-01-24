@@ -196,7 +196,7 @@ export const OutlineEditor: React.FC = () => {
       </div>
       
       {/* 进度导航条 */}
-      <ProgressSteps currentStep={1} projectId={projectId!} />
+      <ProgressSteps currentStep={3} projectId={projectId!} />
       
       {/* AI 输入框栏 */}
       <header className="bg-white shadow-sm border-b border-gray-200 px-3 md:px-6 py-2 md:py-3 flex-shrink-0">

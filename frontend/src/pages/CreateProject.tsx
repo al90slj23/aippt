@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Paperclip, ImagePlus, FolderOpen } from 'lucide-react';
-import { Button, Textarea, useToast, MaterialGeneratorModal, MaterialCenterModal, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList } from '@/components/shared';
+import { ArrowLeft, Paperclip, Home, ArrowRight } from 'lucide-react';
+import { Button, Textarea, useToast, MaterialGeneratorModal, MaterialCenterModal, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList, ProgressSteps } from '@/components/shared';
 import { TemplateSelector, getTemplateFile } from '@/components/shared/TemplateSelector';
 import { listUserTemplates, type UserTemplate, uploadReferenceFile, type ReferenceFile, triggerFileParse, uploadMaterial, listProjects } from '@/api/endpoints';
 import { useProjectStore } from '@/store/useProjectStore';
@@ -30,8 +30,8 @@ export const CreateProject: React.FC = () => {
   const [previewFileId, setPreviewFileId] = useState<string | null>(null);
   const [useTemplateStyle, setUseTemplateStyle] = useState(false);
   const [templateStyle, setTemplateStyle] = useState('');
-  const [hoveredPresetId, setHoveredPresetId] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [currentStep, setCurrentStep] = useState<1 | 2>(1); // 1: 填写内容, 2: 选择模板
 
   // 加载用户模板
   React.useEffect(() => {
@@ -162,7 +162,7 @@ export const CreateProject: React.FC = () => {
           try {
             const parseResponse = await triggerFileParse(uploadedFile.id);
             if (parseResponse?.data?.file) {
-              setReferenceFiles(prev => prev.map(f => f.id === uploadedFile.id ? parseResponse.data.file : f));
+              setReferenceFiles(prev => prev.map(f => f.id === uploadedFile.id ? parseResponse.data!.file : f));
             }
           } catch (parseError) {
             console.error('触发文件解析失败:', parseError);
@@ -284,127 +284,196 @@ export const CreateProject: React.FC = () => {
     }
   };
 
+  // 处理下一步（从步骤1到步骤2）
+  const handleNextStep = () => {
+    if (!content.trim()) {
+      show({ message: '请输入内容', type: 'error' });
+      return;
+    }
+    if (referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing')) {
+      show({ message: '请等待文件解析完成', type: 'info' });
+      return;
+    }
+    setCurrentStep(2);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50/30 to-pink-50/50">
-      {/* 导航栏 */}
-      <nav className="bg-white/40 backdrop-blur-2xl border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* 顶部导航栏 */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：主页按钮 + Logo + 标题 */}
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<Home size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => navigate('/')}
+            >
+              主页
+            </Button>
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="text-xl md:text-2xl">🍌</span>
+              <span className="text-base md:text-xl font-bold">元愈PPT</span>
+            </div>
+            <span className="text-gray-400 hidden lg:inline">|</span>
+            <span className="text-sm md:text-lg font-semibold hidden lg:inline">{currentConfig.title}</span>
+          </div>
+          
+          {/* 右侧：空白 */}
+          <div></div>
+        </div>
+      </div>
+      
+      {/* 进度导航条 */}
+      <ProgressSteps currentStep={currentStep} projectId={null} />
+
+      {/* 主内容区 */}
+      <main className="flex-1 p-3 md:p-6 overflow-y-auto pb-24">
+        <div className="max-w-5xl mx-auto">
+          {currentStep === 1 ? (
+            /* 步骤1：填写内容 */
+            <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+              <div>
+                <h2 className="text-xl font-semibold mb-2">{currentConfig.title}</h2>
+                <p className="text-gray-600">{currentConfig.description}</p>
+              </div>
+
+              {/* 输入区 */}
+              <div className="relative">
+                <Textarea
+                  ref={textareaRef}
+                  placeholder={currentConfig.placeholder}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  onPaste={handlePaste}
+                  rows={currentConfig.rows}
+                  className="pr-20"
+                />
+                
+                <button
+                  type="button"
+                  onClick={() => setIsFileSelectorOpen(true)}
+                  className="absolute left-3 bottom-3 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="选择参考文件"
+                >
+                  <Paperclip size={18} />
+                </button>
+              </div>
+
+              <ImagePreviewList content={content} onRemoveImage={handleRemoveImage} />
+              <ReferenceFileList
+                files={referenceFiles}
+                onFileClick={setPreviewFileId}
+                onFileDelete={handleFileRemove}
+                onFileStatusChange={handleFileStatusChange}
+                deleteMode="remove"
+              />
+            </div>
+          ) : (
+            /* 步骤2：选择模板 */
+            <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">选择风格模板</h2>
+                  <p className="text-gray-600">选择一个模板或描述您想要的风格</p>
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <span className="text-sm text-gray-600">使用文字描述</span>
+                  <input
+                    type="checkbox"
+                    checked={useTemplateStyle}
+                    onChange={(e) => {
+                      setUseTemplateStyle(e.target.checked);
+                      if (e.target.checked) {
+                        setSelectedTemplate(null);
+                        setSelectedTemplateId(null);
+                        setSelectedPresetTemplateId(null);
+                      }
+                    }}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-banana-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-banana-500 relative"></div>
+                </label>
+              </div>
+
+              {useTemplateStyle ? (
+                <div className="space-y-3">
+                  <Textarea
+                    placeholder="描述您想要的 PPT 风格，例如：简约商务风格，使用蓝色和白色配色，字体清晰大方..."
+                    value={templateStyle}
+                    onChange={(e) => setTemplateStyle(e.target.value)}
+                    rows={3}
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {PRESET_STYLES.map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => setTemplateStyle(preset.description)}
+                        className="px-3 py-1.5 text-xs font-medium rounded-full border-2 border-gray-200 hover:border-banana-400 hover:bg-banana-50 transition-all"
+                      >
+                        {preset.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <TemplateSelector
+                  onSelect={handleTemplateSelect}
+                  selectedTemplateId={selectedTemplateId}
+                  selectedPresetTemplateId={selectedPresetTemplateId}
+                  showUpload={true}
+                  projectId={null}
+                />
+              )}
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* 底部固定导航栏 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：上一步按钮 */}
           <Button
             variant="ghost"
             size="sm"
-            icon={<ArrowLeft size={18} />}
-            onClick={() => navigate('/')}
+            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            onClick={() => {
+              if (currentStep === 2) {
+                setCurrentStep(1);
+              } else {
+                navigate('/');
+              }
+            }}
           >
-            返回
+            上一步
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">{currentConfig.title}</h1>
-        </div>
-      </nav>
-
-      {/* 主内容 */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
-          {/* 描述 */}
-          <p className="text-gray-600">{currentConfig.description}</p>
-
-          {/* 输入区 */}
-          <div className="relative">
-            <Textarea
-              ref={textareaRef}
-              placeholder={currentConfig.placeholder}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              onPaste={handlePaste}
-              rows={currentConfig.rows}
-              className="pr-20 pb-14"
-            />
-            
-            <button
-              type="button"
-              onClick={() => setIsFileSelectorOpen(true)}
-              className="absolute left-3 bottom-3 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-              title="选择参考文件"
+          
+          {/* 右侧：下一步/开始生成按钮 */}
+          {currentStep === 1 ? (
+            <Button
+              variant="primary"
+              size="sm"
+              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={handleNextStep}
+              disabled={!content.trim() || referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing')}
             >
-              <Paperclip size={18} />
-            </button>
-
-            <div className="absolute right-3 bottom-3">
-              <Button
-                size="sm"
-                onClick={handleSubmit}
-                loading={isGlobalLoading}
-                disabled={!content.trim() || referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing')}
-              >
-                {referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing') ? '解析中...' : '下一步'}
-              </Button>
-            </div>
-          </div>
-
-          <ImagePreviewList content={content} onRemoveImage={handleRemoveImage} />
-          <ReferenceFileList
-            files={referenceFiles}
-            onFileClick={setPreviewFileId}
-            onFileDelete={handleFileRemove}
-            onFileStatusChange={handleFileStatusChange}
-            deleteMode="remove"
-          />
-
-          {/* 模板选择 */}
-          <div className="pt-4 border-t">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">选择风格模板</h3>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <span className="text-sm text-gray-600">使用文字描述风格</span>
-                <input
-                  type="checkbox"
-                  checked={useTemplateStyle}
-                  onChange={(e) => {
-                    setUseTemplateStyle(e.target.checked);
-                    if (e.target.checked) {
-                      setSelectedTemplate(null);
-                      setSelectedTemplateId(null);
-                      setSelectedPresetTemplateId(null);
-                    }
-                  }}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-banana-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-banana-500 relative"></div>
-              </label>
-            </div>
-
-            {useTemplateStyle ? (
-              <div className="space-y-3">
-                <Textarea
-                  placeholder="描述您想要的 PPT 风格，例如：简约商务风格，使用蓝色和白色配色，字体清晰大方..."
-                  value={templateStyle}
-                  onChange={(e) => setTemplateStyle(e.target.value)}
-                  rows={3}
-                />
-                <div className="flex flex-wrap gap-2">
-                  {PRESET_STYLES.map((preset) => (
-                    <button
-                      key={preset.id}
-                      type="button"
-                      onClick={() => setTemplateStyle(preset.description)}
-                      className="px-3 py-1.5 text-xs font-medium rounded-full border-2 border-gray-200 hover:border-banana-400 hover:bg-banana-50 transition-all"
-                    >
-                      {preset.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <TemplateSelector
-                onSelect={handleTemplateSelect}
-                selectedTemplateId={selectedTemplateId}
-                selectedPresetTemplateId={selectedPresetTemplateId}
-                showUpload={true}
-                projectId={null}
-              />
-            )}
-          </div>
+              下一步
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleSubmit}
+              loading={isGlobalLoading}
+            >
+              开始生成
+            </Button>
+          )}
         </div>
-      </main>
+      </div>
 
       <ToastContainer />
       <MaterialGeneratorModal projectId={null} isOpen={isMaterialModalOpen} onClose={() => setIsMaterialModalOpen(false)} />
