@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { X, FileText, Settings as SettingsIcon, Download, Sparkles, AlertTriangle } from 'lucide-react';
+import { X, FileText, Download, Sparkles, AlertTriangle } from 'lucide-react';
 import { Button, Textarea } from '@/components/shared';
-import { Settings } from '@/pages/Settings';
 import type { ExportExtractorMethod, ExportInpaintMethod } from '@/types';
 
 interface ProjectSettingsModalProps {
@@ -25,7 +24,7 @@ interface ProjectSettingsModalProps {
   isSavingExportSettings?: boolean;
 }
 
-type SettingsTab = 'project' | 'global' | 'export';
+type SettingsTab = 'project' | 'export';
 
 // 组件提取方法选项
 const EXTRACTOR_METHOD_OPTIONS: { value: ExportExtractorMethod; label: string; description: string }[] = [
@@ -128,17 +127,6 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                 <Download size={20} />
                 <span className="font-medium">导出设置</span>
               </button>
-              <button
-                onClick={() => setActiveTab('global')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                  activeTab === 'global'
-                    ? 'bg-banana-500 text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                <SettingsIcon size={20} />
-                <span className="font-medium">全局设置</span>
-              </button>
             </nav>
           </aside>
 
@@ -213,7 +201,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                   </div>
                 </div>
               </div>
-            ) : activeTab === 'export' ? (
+            ) : (
               <div className="max-w-3xl space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">可编辑 PPTX 导出设置</h3>
@@ -319,17 +307,6 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                     </Button>
                   </div>
                 )}
-              </div>
-            ) : (
-              <div className="max-w-4xl">
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">全局设置</h3>
-                  <p className="text-sm text-gray-600">
-                    这些设置应用于所有项目
-                  </p>
-                </div>
-                {/* 复用 Settings 组件的内容 */}
-                <Settings />
               </div>
             )}
           </div>

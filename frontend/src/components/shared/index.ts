@@ -26,3 +26,5 @@ export { ProgressSteps } from './ProgressSteps';
 
 
 
+export { StepLayout } from './StepLayout';
+export type { ActionButton, StepLayoutProps } from './StepLayout';
