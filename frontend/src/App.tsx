@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HomeSimple } from './pages/HomeSimple';
-import { Step1CreateProject } from './pages/Step1.CreateProject';
+import { Step1FillContent } from './pages/Step1.FillContent';
+import { Step2SelectTemplate } from './pages/Step2.SelectTemplate';
 import { History } from './pages/History';
 import { Step3OutlineEditor } from './pages/Step3.OutlineEditor';
 import { Step4DetailEditor } from './pages/Step4.DetailEditor';
@@ -36,7 +37,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeSimple />} />
-          <Route path="/create" element={<Step1CreateProject />} />
+          <Route path="/create" element={<Step1FillContent />} />
+          <Route path="/create/step2" element={<Step2SelectTemplate />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Navigate to="/admin" replace />} />
           <Route path="/admin" element={<Admin />} />

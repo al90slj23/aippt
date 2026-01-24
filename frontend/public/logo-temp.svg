@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FEF3C7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FCD34D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bananaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FBBF24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 圆形背景 -->
+  <circle cx="100" cy="100" r="95" fill="url(#bgGradient)"/>
+  
+  <!-- 香蕉主体 -->
+  <path d="M 60 90 Q 70 50, 100 55 Q 130 60, 140 100 Q 135 130, 110 135 Q 80 130, 70 110 Q 62 100, 60 90 Z" 
+        fill="url(#bananaGradient)" 
+        stroke="#D97706" 
+        stroke-width="3"/>
+  
+  <!-- 香蕉高光 -->
+  <ellipse cx="90" cy="80" rx="12" ry="25" fill="#FEF3C7" opacity="0.5" transform="rotate(-20 90 80)"/>
+  
+  <!-- 香蕉顶部茎 -->
+  <path d="M 100 55 Q 95 45, 98 40" 
+        stroke="#92400E" 
+        stroke-width="4" 
+        fill="none" 
+        stroke-linecap="round"/>
+  
+  <!-- PPT 幻灯片图标 -->
+  <g transform="translate(120, 120)">
+    <!-- 幻灯片1 -->
+    <rect x="0" y="0" width="35" height="25" rx="2" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
+    <rect x="3" y="3" width="29" height="8" fill="#FCD34D"/>
+    <line x1="3" y1="15" x2="20" y2="15" stroke="#D97706" stroke-width="1.5"/>
+    <line x1="3" y1="19" x2="28" y2="19" stroke="#D97706" stroke-width="1.5"/>
+    
+    <!-- 幻灯片2（背后） -->
+    <rect x="5" y="-3" width="35" height="25" rx="2" fill="#FFFFFF" opacity="0.7" stroke="#D97706" stroke-width="1.5"/>
+  </g>
+  
+  <!-- 品牌文字 -->
+  <text x="100" y="175" 
+        font-family="Arial, 'Microsoft YaHei', sans-serif" 
+        font-size="24" 
+        font-weight="bold" 
+        fill="#78350F" 
+        text-anchor="middle">元愈PPT</text>
+</svg>
