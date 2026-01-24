@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HomeSimple } from './pages/HomeSimple';
-import { Step1CreateProject } from './pages/Step1CreateProject';
+import { Step1CreateProject } from './pages/Step1.CreateProject';
 import { History } from './pages/History';
-import { Step3OutlineEditor } from './pages/Step3OutlineEditor';
-import { Step4DetailEditor } from './pages/Step4DetailEditor';
-import { Step5SlidePreview } from './pages/Step5SlidePreview';
+import { Step3OutlineEditor } from './pages/Step3.OutlineEditor';
+import { Step4DetailEditor } from './pages/Step4.DetailEditor';
+import { Step5SlidePreview } from './pages/Step5.SlidePreview';
 import Admin from './pages/Admin';
 import { useProjectStore } from './store/useProjectStore';
 import { useToast } from './components/shared';
