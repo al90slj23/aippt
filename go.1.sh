@@ -14,7 +14,12 @@ DEPLOY_ID="DEPLOY.${BUILD_ID}"
 # 显示变更文件
 echo ""
 echo -e "${YELLOW}📋 本次变更文件:${NC}"
-git status --short
+CHANGED_FILES=$(git status --short)
+if [ -z "$CHANGED_FILES" ]; then
+    echo -e "${DIM}  (无变更)${NC}"
+else
+    git status --short
+fi
 echo ""
 
 # 先 git add
