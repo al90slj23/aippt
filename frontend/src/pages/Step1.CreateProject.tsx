@@ -434,12 +434,12 @@ export const Step1CreateProject: React.FC = () => {
 
       {/* 底部固定导航栏 */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
           {/* 左侧：上一步按钮 */}
           <Button
             variant="ghost"
-            size="sm"
-            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            size="lg"
+            icon={<ArrowLeft size={20} className="md:w-[22px] md:h-[22px]" />}
             onClick={() => {
               if (currentStep === 2) {
                 setCurrentStep(1);
@@ -447,6 +447,7 @@ export const Step1CreateProject: React.FC = () => {
                 navigate('/');
               }
             }}
+            className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
           >
             上一步
           </Button>
@@ -455,19 +456,21 @@ export const Step1CreateProject: React.FC = () => {
           {currentStep === 1 ? (
             <Button
               variant="primary"
-              size="sm"
-              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
+              size="lg"
+              icon={<ArrowRight size={20} className="md:w-[22px] md:h-[22px]" />}
               onClick={handleNextStep}
               disabled={!content.trim() || referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing')}
+              className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
             >
               下一步
             </Button>
           ) : (
             <Button
               variant="primary"
-              size="sm"
+              size="lg"
               onClick={handleSubmit}
               loading={isGlobalLoading}
+              className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
             >
               开始生成
             </Button>

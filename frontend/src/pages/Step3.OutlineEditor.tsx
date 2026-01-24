@@ -425,12 +425,12 @@ export const Step3OutlineEditor: React.FC = () => {
       
       {/* 底部固定导航栏 */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
           {/* 左侧：上一步按钮 */}
           <Button
             variant="ghost"
-            size="sm"
-            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            size="lg"
+            icon={<ArrowLeft size={20} className="md:w-[22px] md:h-[22px]" />}
             onClick={() => {
               if (fromHistory) {
                 navigate('/history');
@@ -438,25 +438,28 @@ export const Step3OutlineEditor: React.FC = () => {
                 navigate('/');
               }
             }}
+            className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
           >
             上一步
           </Button>
           
           {/* 右侧：保存和下一步按钮 */}
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-3 md:gap-4">
             <Button 
               variant="secondary" 
-              size="sm" 
-              icon={<Save size={16} className="md:w-[18px] md:h-[18px]" />}
+              size="lg" 
+              icon={<Save size={20} className="md:w-[22px] md:h-[22px]" />}
               onClick={async () => await saveAllPages()}
+              className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
             >
               保存
             </Button>
             <Button
               variant="primary"
-              size="sm"
-              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
+              size="lg"
+              icon={<ArrowRight size={20} className="md:w-[22px] md:h-[22px]" />}
               onClick={() => navigate(`/project/${projectId}/detail`)}
+              className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
             >
               下一步
             </Button>

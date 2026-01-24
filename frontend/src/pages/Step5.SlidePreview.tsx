@@ -1773,12 +1773,12 @@ export const Step5SlidePreview: React.FC = () => {
       
       {/* 底部固定导航栏 */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
           {/* 左侧：上一步按钮 */}
           <Button
             variant="ghost"
-            size="sm"
-            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            size="lg"
+            icon={<ArrowLeft size={20} className="md:w-[22px] md:h-[22px]" />}
             onClick={() => {
               if (fromHistory) {
                 navigate('/history');
@@ -1786,6 +1786,7 @@ export const Step5SlidePreview: React.FC = () => {
                 navigate(`/project/${projectId}/detail`);
               }
             }}
+            className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
           >
             上一步
           </Button>
@@ -1794,13 +1795,14 @@ export const Step5SlidePreview: React.FC = () => {
           <div className="relative">
             <Button
               variant="primary"
-              size="sm"
-              icon={<Download size={16} className="md:w-[18px] md:h-[18px]" />}
+              size="lg"
+              icon={<Download size={20} className="md:w-[22px] md:h-[22px]" />}
               onClick={() => {
                 setShowExportMenu(!showExportMenu);
                 setShowExportTasksPanel(false);
               }}
               disabled={isMultiSelectMode ? selectedPageIds.size === 0 : !hasAllImages}
+              className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
             >
               {isMultiSelectMode && selectedPageIds.size > 0 
                 ? `导出 (${selectedPageIds.size})` 
