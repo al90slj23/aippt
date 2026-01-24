@@ -580,7 +580,7 @@ export const Settings: React.FC = () => {
     let displayValue = value as string | number;
     let placeholder = field.placeholder || '';
     
-    // 如果是敏感字段且输入框为空，显示遮蔽后的值
+    // 如果是敏感字段且输入框为空，显示遮蔽后的值或完整值
     if (field.sensitiveField && settings && !value) {
       const maskedKey = `${field.key}_masked` as keyof SettingsType;
       const fullKey = field.key as keyof SettingsType;
@@ -589,7 +589,7 @@ export const Settings: React.FC = () => {
         // 显示完整值
         displayValue = settings[fullKey] as string;
       } else if (settings[maskedKey]) {
-        // 显示遮蔽值
+        // 显示遮蔽值（默认）
         displayValue = settings[maskedKey] as string;
       }
     }
@@ -607,7 +607,7 @@ export const Settings: React.FC = () => {
         <div className="relative">
           <Input
             label={field.label}
-            type={field.type === 'number' ? 'number' : (field.sensitiveField && !isVisible ? 'password' : 'text')}
+            type={field.type === 'number' ? 'number' : 'text'}
             placeholder={placeholder}
             value={displayValue}
             onChange={(e) => {
