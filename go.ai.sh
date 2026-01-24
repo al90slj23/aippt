@@ -17,13 +17,16 @@ call_ai_api() {
         return 1
     fi
 
-    # 检查 DeepSeek API Key
-    if [ -z "$DEEPSEEK_API_KEY" ] && [ -z "$APIKEY_MacOS_Code_DeepSeek" ]; then
+    # 检查 DeepSeek API Key（优先使用系统环境变量）
+    local API_KEY=""
+    if [ -n "$APIKEY_MacOS_Code_DeepSeek" ]; then
+        API_KEY="$APIKEY_MacOS_Code_DeepSeek"
+    elif [ -n "$DEEPSEEK_API_KEY" ]; then
+        API_KEY="$DEEPSEEK_API_KEY"
+    else
         echo "错误：未配置 DEEPSEEK_API_KEY 或 APIKEY_MacOS_Code_DeepSeek 环境变量" >&2
         return 1
     fi
-
-    local API_KEY="${DEEPSEEK_API_KEY:-$APIKEY_MacOS_Code_DeepSeek}"
     
     # 调试：检查 API key 是否有效
     if [ ${#API_KEY} -lt 20 ]; then
