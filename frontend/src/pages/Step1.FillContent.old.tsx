@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Paperclip } from 'lucide-react';
-import { StepLayout, Textarea, useToast, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList } from '@/components/shared';
+import { ArrowLeft, Paperclip, Home, ArrowRight } from 'lucide-react';
+import { Button, Textarea, useToast, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList, ProgressSteps } from '@/components/shared';
 import { uploadReferenceFile, type ReferenceFile, triggerFileParse, uploadMaterial } from '@/api/endpoints';
 import { useProjectStore } from '@/store/useProjectStore';
 
@@ -33,6 +33,7 @@ export const Step1FillContent: React.FC = () => {
   // 从项目中恢复内容
   useEffect(() => {
     if (currentProject && projectId) {
+      // 根据项目类型恢复内容
       if (currentProject.creation_type === 'idea' && currentProject.idea_prompt) {
         setContent(currentProject.idea_prompt);
       } else if (currentProject.creation_type === 'outline' && currentProject.outline_text) {
@@ -219,6 +220,7 @@ export const Step1FillContent: React.FC = () => {
       return;
     }
     
+    // 导航到步骤2，传递数据
     navigate('/create/step2', { 
       state: { 
         type: creationType,
@@ -229,18 +231,35 @@ export const Step1FillContent: React.FC = () => {
   };
 
   return (
-    <StepLayout
-      currentStep={1}
-      projectId={projectId || null}
-      pageTitle={currentConfig.title}
-      navigation={{
-        onPrevious: () => navigate('/'),
-        onNext: handleNextStep,
-        disableNext: !content.trim() || referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing'),
-      }}
-    >
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* 顶部导航栏 */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<Home size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => navigate('/')}
+            >
+              主页
+            </Button>
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="text-xl md:text-2xl">🍌</span>
+              <span className="text-base md:text-xl font-bold">元愈PPT</span>
+            </div>
+            <span className="text-gray-400 hidden lg:inline">|</span>
+            <span className="text-sm md:text-lg font-semibold hidden lg:inline">{currentConfig.title}</span>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      
+      {/* 进度导航条 */}
+      <ProgressSteps currentStep={1} projectId={projectId || null} />
+
       {/* 主内容区 */}
-      <div className="flex-1 p-3 md:p-6 overflow-y-auto">
+      <main className="flex-1 p-3 md:p-6 overflow-y-auto pb-28 md:pb-32">
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
             <div>
@@ -280,6 +299,32 @@ export const Step1FillContent: React.FC = () => {
             />
           </div>
         </div>
+      </main>
+
+      {/* 底部固定导航栏 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
+          <Button
+            variant="ghost"
+            size="lg"
+            icon={<ArrowLeft size={20} className="md:w-[22px] md:h-[22px]" />}
+            onClick={() => navigate('/')}
+            className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
+          >
+            上一步
+          </Button>
+          
+          <Button
+            variant="primary"
+            size="lg"
+            icon={<ArrowRight size={20} className="md:w-[22px] md:h-[22px]" />}
+            onClick={handleNextStep}
+            disabled={!content.trim() || referenceFiles.some(f => f.parse_status === 'pending' || f.parse_status === 'parsing')}
+            className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
+          >
+            下一步
+          </Button>
+        </div>
       </div>
 
       <ToastContainer />
@@ -292,6 +337,6 @@ export const Step1FillContent: React.FC = () => {
         initialSelectedIds={selectedFileIds}
       />
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />
-    </StepLayout>
+    </div>
   );
 };

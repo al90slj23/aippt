@@ -16,7 +16,7 @@ interface ProgressStepsProps {
 
 const steps: Step[] = [
   { number: 1, label: '填写内容', path: 'create' },
-  { number: 2, label: '选择模板', path: 'create' },
+  { number: 2, label: '选择模板', path: 'template' },
   { number: 3, label: '编辑大纲', path: 'outline' },
   { number: 4, label: '编辑描述', path: 'detail' },
   { number: 5, label: '生成图片', path: 'preview' },
@@ -31,7 +31,6 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
 
   const handleStepClick = (step: Step) => {
     // 只允许点击当前步骤之前的步骤（已完成的步骤）
-    // 如果没有 projectId（在创建项目页面），不允许跳转
     if (step.number < currentStep && projectId) {
       navigate(`/project/${projectId}/${step.path}`);
     }

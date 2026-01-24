@@ -24,6 +24,7 @@ export const Step4DetailEditor: React.FC = () => {
   const { confirm, ConfirmDialog } = useConfirm();
   const [isAiRefining, setIsAiRefining] = useState(false);
   const [previewFileId, setPreviewFileId] = useState<string | null>(null);
+  const [isNavigating, setIsNavigating] = useState(false); // 新增：导航 loading 状态
 
   // 加载项目数据
   useEffect(() => {
@@ -113,6 +114,11 @@ export const Step4DetailEditor: React.FC = () => {
     }
   }, [currentProject, projectId, syncProject, show]);
 
+  // 包装函数以适配 StepLayout 的 aiRefine.onSubmit 签名
+  const handleAiRefineWrapper = useCallback(async (prompt: string) => {
+    await handleAiRefineDescriptions(prompt, []);
+  }, [handleAiRefineDescriptions]);
+
   const handleExportDescriptions = useCallback(() => {
     if (!currentProject) return;
     exportDescriptionsToMarkdown(currentProject);
@@ -164,7 +170,7 @@ export const Step4DetailEditor: React.FC = () => {
         }}
         aiRefine={{
           placeholder: '例如：让描述更详细、删除第2页的某个要点、强调XXX的重要性、调整第3页的语气更专业...',
-          onSubmit: handleAiRefineDescriptions,
+          onSubmit: handleAiRefineWrapper,
           onStatusChange: setIsAiRefining,
         }}
         navigation={{
@@ -175,9 +181,17 @@ export const Step4DetailEditor: React.FC = () => {
               navigate(`/project/${projectId}/outline`);
             }
           },
-          onNext: () => navigate(`/project/${projectId}/preview`),
+          onNext: async () => {
+            setIsNavigating(true);
+            // 给一个短暂延迟，让 loading 状态显示出来
+            await new Promise(resolve => setTimeout(resolve, 300));
+            navigate(`/project/${projectId}/preview`);
+          },
           disableNext: !hasAllDescriptions,
+          loadingNext: isNavigating,
         }}
+        isLoading={isNavigating}
+        loadingMessage="正在跳转到图片生成..."
       >
         {/* 主内容区 */}
         <div className="flex-1 p-3 md:p-6 overflow-y-auto">

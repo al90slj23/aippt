@@ -24,11 +24,22 @@ call_ai_api() {
     fi
 
     local API_KEY="${DEEPSEEK_API_KEY:-$APIKEY_MacOS_Code_DeepSeek}"
+    
+    # 调试：检查 API key 是否有效
+    if [ ${#API_KEY} -lt 20 ]; then
+        echo "错误：API Key 长度异常 (${#API_KEY} 字符)" >&2
+        return 1
+    fi
+    
     local API_URL="https://api.deepseek.com/chat/completions"
     local MODEL="deepseek-chat"
 
     # 使用 Python 调用 API（通过环境变量传递参数避免转义问题）
-    local RESULT=$(PROMPT_TEXT="$PROMPT" SYSTEM_TEXT="$SYSTEM_PROMPT" python3 -c "
+    # 使用临时文件分离 stdout 和 stderr
+    local TEMP_OUT=$(mktemp)
+    local TEMP_ERR=$(mktemp)
+    
+    PROMPT_TEXT="$PROMPT" SYSTEM_TEXT="$SYSTEM_PROMPT" python3 -c "
 import json
 import urllib.request
 import sys
@@ -71,15 +82,22 @@ except urllib.error.URLError as e:
 except Exception as e:
     print(f'错误: {e}', file=sys.stderr)
     sys.exit(1)
-" 2>&1)
+" > "$TEMP_OUT" 2> "$TEMP_ERR"
     
     local EXIT_CODE=$?
+    local RESULT=$(cat "$TEMP_OUT")
+    local ERROR=$(cat "$TEMP_ERR")
     
-    if [ $EXIT_CODE -eq 0 ]; then
+    # 清理临时文件
+    rm -f "$TEMP_OUT" "$TEMP_ERR"
+    
+    if [ $EXIT_CODE -eq 0 ] && [ -n "$RESULT" ]; then
         echo "$RESULT"
         return 0
     else
-        echo "错误: $RESULT" >&2
+        if [ -n "$ERROR" ]; then
+            echo "$ERROR" >&2
+        fi
         return 1
     fi
 }

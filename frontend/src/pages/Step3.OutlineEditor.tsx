@@ -69,6 +69,7 @@ export const Step3OutlineEditor: React.FC = () => {
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
   const [isAiRefining, setIsAiRefining] = useState(false);
   const [previewFileId, setPreviewFileId] = useState<string | null>(null);
+  const [isNavigating, setIsNavigating] = useState(false); // 新增：导航 loading 状态
   const { confirm, ConfirmDialog } = useConfirm();
   const { show, ToastContainer } = useToast();
 
@@ -253,8 +254,16 @@ export const Step3OutlineEditor: React.FC = () => {
               navigate('/');
             }
           },
-          onNext: () => navigate(`/project/${projectId}/detail`),
+          onNext: async () => {
+            setIsNavigating(true);
+            // 给一个短暂延迟，让 loading 状态显示出来
+            await new Promise(resolve => setTimeout(resolve, 300));
+            navigate(`/project/${projectId}/detail`);
+          },
+          loadingNext: isNavigating,
         }}
+        isLoading={isNavigating}
+        loadingMessage="正在跳转到详情编辑..."
       >
         {/* 主内容区 */}
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden">

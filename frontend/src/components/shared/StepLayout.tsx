@@ -20,8 +20,8 @@ export interface StepLayoutProps {
   projectId: string | null;
   pageTitle: string;
   
-  // 操作按钮
-  actionButtons: ActionButton[];
+  // 操作按钮（可选）
+  actionButtons?: ActionButton[];
   
   // 进度信息（可选）
   progressInfo?: {
@@ -50,7 +50,13 @@ export interface StepLayoutProps {
     previousLabel?: string;
     nextLabel?: string;
     disableNext?: boolean;
+    loadingNext?: boolean; // 新增：下一步按钮的 loading 状态
+    loadingPrevious?: boolean; // 新增：上一步按钮的 loading 状态
   };
+  
+  // 全局 loading 状态（显示全屏遮罩）
+  isLoading?: boolean;
+  loadingMessage?: string;
   
   // 是否来自历史记录
   fromHistory?: boolean;
@@ -66,14 +72,16 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
   contextBar,
   children,
   navigation,
+  isLoading = false,
+  loadingMessage = '处理中...',
 }) => {
   const navigate = useNavigate();
   const { brandSettings } = useBrand();
   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
 
   // 找到主要操作按钮（中间带特效的按钮）
-  const mainActionButton = actionButtons.find(btn => btn.isMainAction);
-  const otherButtons = actionButtons.filter(btn => !btn.isMainAction);
+  const mainActionButton = actionButtons?.find(btn => btn.isMainAction);
+  const otherButtons = actionButtons?.filter(btn => !btn.isMainAction) || [];
   
   // 将主要按钮放在中间
   const leftButtons = otherButtons.slice(0, Math.ceil(otherButtons.length / 2));
@@ -113,9 +121,10 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
       {/* 进度导航条 */}
       <ProgressSteps currentStep={currentStep} projectId={projectId} />
 
-      {/* 操作面板 */}
-      <div className="bg-gradient-to-r from-banana-50 via-orange-50/30 to-pink-50/20 border-b border-gray-200 px-3 md:px-6 py-4 md:py-5 flex-shrink-0">
-        <div className="max-w-5xl mx-auto space-y-4">
+      {/* 操作面板（可选） */}
+      {actionButtons && actionButtons.length > 0 && (
+        <div className="bg-gradient-to-r from-banana-50 via-orange-50/30 to-pink-50/20 border-b border-gray-200 px-3 md:px-6 py-4 md:py-5 flex-shrink-0">
+          <div className="max-w-5xl mx-auto space-y-4">
           {/* 按钮组 */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
             {/* 左侧按钮 */}
@@ -220,6 +229,7 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
           )}
         </div>
       </div>
+      )}
 
       {/* 上下文信息栏（可选） */}
       {contextBar && (
@@ -242,6 +252,8 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
             size="lg"
             icon={<ArrowLeft size={20} className="md:w-[22px] md:h-[22px]" />}
             onClick={navigation.onPrevious}
+            loading={navigation.loadingPrevious}
+            disabled={navigation.loadingPrevious || navigation.loadingNext}
             className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
           >
             {navigation.previousLabel || '上一步'}
@@ -253,13 +265,32 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
             size="lg"
             icon={<ArrowRight size={20} className="md:w-[22px] md:h-[22px]" />}
             onClick={navigation.onNext}
-            disabled={navigation.disableNext}
+            loading={navigation.loadingNext}
+            disabled={navigation.disableNext || navigation.loadingNext || navigation.loadingPrevious}
             className="text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4"
           >
             {navigation.nextLabel || '下一步'}
           </Button>
         </div>
       </div>
+
+      {/* 全屏遮罩 Loading */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-2xl p-8 flex flex-col items-center gap-4 max-w-sm mx-4">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-banana-200 border-t-banana-500 rounded-full animate-spin"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-banana-500 animate-pulse" />
+              </div>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-semibold text-gray-900 mb-1">{loadingMessage}</p>
+              <p className="text-sm text-gray-500">请稍候，正在处理您的请求...</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

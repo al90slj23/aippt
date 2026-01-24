@@ -39,6 +39,8 @@ function App() {
           <Route path="/" element={<HomeSimple />} />
           <Route path="/create" element={<Step1FillContent />} />
           <Route path="/create/step2" element={<Step2SelectTemplate />} />
+          <Route path="/project/:projectId/create" element={<Step1FillContent />} />
+          <Route path="/project/:projectId/template" element={<Step2SelectTemplate />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Navigate to="/admin" replace />} />
           <Route path="/admin" element={<Admin />} />

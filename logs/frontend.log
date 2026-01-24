@@ -193,3 +193,807 @@
 21:44:21 [vite] hmr update /src/components/shared/ProjectSettingsModal.tsx, /src/index.css
 21:44:36 [vite] hmr update /src/components/shared/ProjectSettingsModal.tsx, /src/index.css
 21:45:18 [vite] hmr update /src/components/shared/ProjectSettingsModal.tsx, /src/index.css
+22:30:18 [vite] hmr update /src/components/shared/ProgressSteps.tsx, /src/index.css
+22:30:29 [vite] hmr update /src/components/shared/ProgressSteps.tsx, /src/index.css
+22:35:16 [vite] hmr update /src/App.tsx, /src/index.css
+22:35:28 [vite] hmr update /src/components/shared/ProgressSteps.tsx, /src/index.css
+22:35:38 [vite] hmr update /src/components/shared/ProgressSteps.tsx, /src/index.css
+22:36:01 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+22:36:18 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+22:36:43 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:36:56 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:37:31 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+22:41:31 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:41:39 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:41:39 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:41:39 [vite] Pre-transform error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+22:41:40 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:41:55 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:41:55 [vite] Pre-transform error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+22:41:56 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:42:05 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:42:06 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:42:16 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:42:18 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:42:28 [vite] hmr update /src/pages/Step3.OutlineEditor.tsx, /src/index.css
+22:42:29 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:42:37 [vite] hmr update /src/pages/Step3.OutlineEditor.tsx, /src/index.css
+22:42:38 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:42:46 [vite] hmr update /src/pages/Step4.DetailEditor.tsx, /src/index.css
+22:42:46 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:43:19 [vite] hmr update /src/pages/Step4.DetailEditor.tsx, /src/index.css
+22:43:19 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Identifier 'brandSettings' has already been declared. (80:10)
+
+  78 |   const navigate = useNavigate();
+  79 |   const { brandSettings } = useBrand();
+> 80 |   const { brandSettings } = useBrand();
+     |           ^
+  81 |   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |
+  83 |   // 找到主要操作按钮（中间带特效的按钮）
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:80:10
+  78 |    const navigate = useNavigate();
+  79 |    const { brandSettings } = useBrand();
+  80 |    const { brandSettings } = useBrand();
+     |            ^
+  81 |    const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
+  82 |  
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7571:12)
+      at TypeScriptParserMixin.checkLVal (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:7567:16)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseBlockBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseBlock (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
+      at TypeScriptParserMixin.parseArrowExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12149:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11759:12)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseVar (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13460:91)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:14010:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9690:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13969:31)
+      at TypeScriptParserMixin.parseExport (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:13888:29)
+22:43:43 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:52:50 [vite] hmr update /src/pages/Step4.DetailEditor.tsx, /src/index.css
+22:53:00 [vite] hmr update /src/pages/Step4.DetailEditor.tsx, /src/index.css
+22:54:51 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:55:01 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:55:12 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:55:12 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Unexpected token, expected "," (233:6)
+
+  231 |       </div>
+  232 |
+> 233 |       {/* 上下文信息栏（可选） */}
+      |       ^
+  234 |       {contextBar && (
+  235 |         <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+  236 |           {contextBar}
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:233:6
+  231|        </div>
+  232|  
+  233|        {/* 上下文信息栏（可选） */}
+     |        ^
+  234|        {contextBar && (
+  235|          <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.expect (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6924:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11733:14)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOpBaseRightExpr (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11050:34)
+      at TypeScriptParserMixin.parseExprOpRightExpr (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11045:21)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11011:27)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9365:18)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11017:21)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9365:18)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10972:17)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10844:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4661:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4740:36)
+      at TypeScriptParserMixin.jsxParseElement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9828:39
+      at TypeScriptParserMixin.tryParse (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+22:55:13 [vite] Pre-transform error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Unexpected token, expected "," (233:6)
+
+  231 |       </div>
+  232 |
+> 233 |       {/* 上下文信息栏（可选） */}
+      |       ^
+  234 |       {contextBar && (
+  235 |         <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+  236 |           {contextBar}
+22:55:13 [vite] Internal server error: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx: Unexpected token, expected "," (233:6)
+
+  231 |       </div>
+  232 |
+> 233 |       {/* 上下文信息栏（可选） */}
+      |       ^
+  234 |       {contextBar && (
+  235 |         <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+  236 |           {contextBar}
+  Plugin: vite:react-babel
+  File: /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/src/components/shared/StepLayout.tsx:233:6
+  231|        </div>
+  232|  
+  233|        {/* 上下文信息栏（可选） */}
+     |        ^
+  234|        {contextBar && (
+  235|          <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+      at constructor (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.expect (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6924:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11733:14)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOpBaseRightExpr (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11050:34)
+      at TypeScriptParserMixin.parseExprOpRightExpr (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11045:21)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11011:27)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9365:18)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11017:21)
+      at TypeScriptParserMixin.parseExprOp (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9365:18)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10972:17)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10844:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4661:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4740:36)
+      at TypeScriptParserMixin.jsxParseElement (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9828:39
+      at TypeScriptParserMixin.tryParse (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
+      at /Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
+      at TypeScriptParserMixin.parseExprAtom (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/Volumes/RuiRui4TB/CloudBackup/Mac/code/github/al90slj23/AIPPT/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
+22:55:33 [vite] hmr update /src/components/shared/StepLayout.tsx, /src/index.css
+22:56:36 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+22:56:36 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+22:57:36 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:57:54 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:58:03 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:58:11 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:58:20 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:58:52 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:59:00 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:59:09 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:59:19 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:59:27 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+22:59:50 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+23:00:01 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
