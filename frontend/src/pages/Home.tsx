@@ -5,6 +5,7 @@ import { Button, Textarea, Card, useToast, MaterialGeneratorModal, MaterialCente
 import { TemplateSelector, getTemplateFile } from '@/components/shared/TemplateSelector';
 import { listUserTemplates, type UserTemplate, uploadReferenceFile, type ReferenceFile, associateFileToProject, triggerFileParse, uploadMaterial, associateMaterialsToProject, listProjects } from '@/api/endpoints';
 import { useProjectStore } from '@/store/useProjectStore';
+import { useBrand } from '@/contexts/BrandContext';
 import { PRESET_STYLES } from '@/config/presetStyles';
 
 type CreationType = 'idea' | 'outline' | 'description';
@@ -13,6 +14,7 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
   const { initializeProject, isGlobalLoading } = useProjectStore();
   const { show, ToastContainer } = useToast();
+  const { brandSettings } = useBrand();
   
   const [activeTab, setActiveTab] = useState<CreationType>('idea');
   const [content, setContent] = useState('');
@@ -493,12 +495,12 @@ export const Home: React.FC = () => {
             <div className="flex items-center">
               <img
                 src="/logo.png"
-                alt="元愈PPT Logo"
+                alt={`${brandSettings.brand_name} Logo`}
                 className="h-10 md:h-12 w-auto rounded-lg object-contain"
               />
             </div>
             <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-banana-600 via-orange-500 to-pink-500 bg-clip-text text-transparent">
-              元愈PPT
+              {brandSettings.brand_name}
             </span>
           </div>
           <div className="flex items-center gap-2 md:gap-3">
@@ -586,7 +588,7 @@ export const Home: React.FC = () => {
         <div className="text-center mb-10 md:mb-16 space-y-4 md:space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-banana-200/50 shadow-sm mb-4">
             <span className="text-2xl animate-pulse"><Sparkles size={20} color="orange" /></span>
-            <span className="text-sm font-medium text-gray-700">基于 nano banana pro🍌 的原生 AI PPT 生成器</span>
+            <span className="text-sm font-medium text-gray-700">{brandSettings.brand_description}</span>
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
@@ -594,12 +596,12 @@ export const Home: React.FC = () => {
               backgroundSize: '200% auto',
               animation: 'gradient 3s ease infinite',
             }}>
-              元愈PPT
+              {brandSettings.brand_name}
             </span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light">
-            Vibe your PPT like vibing code
+            {brandSettings.brand_slogan}
           </p>
 
           {/* 特性标签 */}

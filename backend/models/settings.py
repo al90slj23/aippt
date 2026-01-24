@@ -35,6 +35,12 @@ class Settings(db.Model):
     # 百度 OCR 配置
     baidu_ocr_api_key = db.Column(db.String(500), nullable=True)  # 百度 OCR API Key
     
+    # 品牌配置
+    brand_name = db.Column(db.String(100), nullable=True)  # 品牌名称
+    brand_slogan = db.Column(db.String(200), nullable=True)  # 品牌标语
+    brand_description = db.Column(db.String(500), nullable=True)  # 品牌描述
+    admin_password_hash = db.Column(db.String(200), nullable=True)  # 管理员密码哈希
+    
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
@@ -60,6 +66,10 @@ class Settings(db.Model):
             'enable_image_reasoning': self.enable_image_reasoning,
             'image_thinking_budget': self.image_thinking_budget,
             'baidu_ocr_api_key_length': len(self.baidu_ocr_api_key) if self.baidu_ocr_api_key else 0,
+            'brand_name': self.brand_name,
+            'brand_slogan': self.brand_slogan,
+            'brand_description': self.brand_description,
+            'has_admin_password': bool(self.admin_password_hash),
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }

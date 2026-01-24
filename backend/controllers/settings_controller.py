@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from contextlib import contextmanager
 from flask import Blueprint, request, current_app
 from PIL import Image
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Settings, Task
 from utils import success_response, error_response, bad_request
 from config import Config, PROJECT_ROOT
@@ -888,4 +889,149 @@ def get_test_status(task_id: str):
             "GET_TEST_STATUS_ERROR",
             f"获取测试状态失败: {str(e)}",
             500
+        )
+
+
+
+@settings_bp.route("/brand", methods=["GET"], strict_slashes=False)
+def get_brand_settings():
+    """
+    GET /api/settings/brand - 获取品牌配置（公开接口，无需认证）
+    
+    Returns:
+        {
+            "data": {
+                "brand_name": "元愈PPT",
+                "brand_slogan": "Vibe your PPT like vibing code",
+                "brand_description": "基于 nano banana pro🍌 的原生 AI PPT 生成器"
+            }
+        }
+    """
+    try:
+        settings = Settings.get_settings()
+        return success_response({
+            'brand_name': settings.brand_name or '元愈PPT',
+            'brand_slogan': settings.brand_slogan or 'Vibe your PPT like vibing code',
+            'brand_description': settings.brand_description or '基于 nano banana pro🍌 的原生 AI PPT 生成器',
+        })
+    except Exception as e:
+        logger.error(f"Error getting brand settings: {str(e)}")
+        return error_response(
+            "GET_BRAND_SETTINGS_ERROR",
+            f"Failed to get brand settings: {str(e)}",
+            500,
+        )
+
+
+@settings_bp.route("/brand/admin/verify", methods=["POST"], strict_slashes=False)
+def verify_admin_password():
+    """
+    POST /api/settings/brand/admin/verify - 验证管理员密码
+    
+    Request Body:
+        {
+            "password": "admin-password"
+        }
+    
+    Returns:
+        {
+            "data": {
+                "valid": true/false
+            }
+        }
+    """
+    try:
+        data = request.get_json()
+        if not data or 'password' not in data:
+            return bad_request("Password is required")
+        
+        password = data['password']
+        settings = Settings.get_settings()
+        
+        # 如果没有设置密码，默认密码为 "admin"
+        if not settings.admin_password_hash:
+            is_valid = password == "admin"
+        else:
+            is_valid = check_password_hash(settings.admin_password_hash, password)
+        
+        return success_response({'valid': is_valid})
+    
+    except Exception as e:
+        logger.error(f"Error verifying admin password: {str(e)}")
+        return error_response(
+            "VERIFY_ADMIN_PASSWORD_ERROR",
+            f"Failed to verify admin password: {str(e)}",
+            500,
+        )
+
+
+@settings_bp.route("/brand/admin", methods=["PUT"], strict_slashes=False)
+def update_brand_settings():
+    """
+    PUT /api/settings/brand/admin - 更新品牌配置（需要管理员密码）
+    
+    Request Body:
+        {
+            "password": "admin-password",
+            "brand_name": "元愈PPT",
+            "brand_slogan": "Vibe your PPT like vibing code",
+            "brand_description": "基于 nano banana pro🍌 的原生 AI PPT 生成器",
+            "new_password": "new-admin-password"  // 可选，用于修改管理员密码
+        }
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return bad_request("Request body is required")
+        
+        if 'password' not in data:
+            return bad_request("Password is required")
+        
+        password = data['password']
+        settings = Settings.get_settings()
+        
+        # 验证密码
+        if not settings.admin_password_hash:
+            is_valid = password == "admin"
+        else:
+            is_valid = check_password_hash(settings.admin_password_hash, password)
+        
+        if not is_valid:
+            return error_response(
+                "INVALID_PASSWORD",
+                "Invalid admin password",
+                403,
+            )
+        
+        # 更新品牌配置
+        if 'brand_name' in data:
+            settings.brand_name = data['brand_name']
+        
+        if 'brand_slogan' in data:
+            settings.brand_slogan = data['brand_slogan']
+        
+        if 'brand_description' in data:
+            settings.brand_description = data['brand_description']
+        
+        # 更新管理员密码（如果提供）
+        if 'new_password' in data and data['new_password']:
+            settings.admin_password_hash = generate_password_hash(data['new_password'])
+        
+        settings.updated_at = datetime.now(timezone.utc)
+        db.session.commit()
+        
+        logger.info("Brand settings updated successfully")
+        return success_response({
+            'brand_name': settings.brand_name,
+            'brand_slogan': settings.brand_slogan,
+            'brand_description': settings.brand_description,
+        }, "Brand settings updated successfully")
+    
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"Error updating brand settings: {str(e)}")
+        return error_response(
+            "UPDATE_BRAND_SETTINGS_ERROR",
+            f"Failed to update brand settings: {str(e)}",
+            500,
         )

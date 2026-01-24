@@ -4,6 +4,7 @@ import { Home, Trash2 } from 'lucide-react';
 import { Button, Loading, Card, useToast, useConfirm } from '@/components/shared';
 import { ProjectCard } from '@/components/history/ProjectCard';
 import { useProjectStore } from '@/store/useProjectStore';
+import { useBrand } from '@/contexts/BrandContext';
 import * as api from '@/api/endpoints';
 import { normalizeProject } from '@/utils';
 import { getProjectTitle, getProjectRoute } from '@/utils/projectUtils';
@@ -12,6 +13,7 @@ import type { Project } from '@/types';
 export const History: React.FC = () => {
   const navigate = useNavigate();
   const { syncProject, setCurrentProject } = useProjectStore();
+  const { brandSettings } = useBrand();
   
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -260,7 +262,7 @@ export const History: React.FC = () => {
             <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-banana-500 to-banana-600 rounded-lg flex items-center justify-center text-xl md:text-2xl">
               🍌
             </div>
-            <span className="text-lg md:text-xl font-bold text-gray-900">元愈PPT</span>
+            <span className="text-lg md:text-xl font-bold text-gray-900">{brandSettings.brand_name}</span>
           </div>
           <div className="flex items-center gap-2 md:gap-4">
             <Button
