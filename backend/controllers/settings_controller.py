@@ -1013,6 +1013,12 @@ def update_brand_settings():
         if 'brand_description' in data:
             settings.brand_description = data['brand_description']
         
+        if 'brand_logo_url' in data:
+            settings.brand_logo_url = data['brand_logo_url']
+        
+        if 'brand_favicon_url' in data:
+            settings.brand_favicon_url = data['brand_favicon_url']
+        
         # 更新管理员密码（如果提供）
         if 'new_password' in data and data['new_password']:
             settings.admin_password_hash = generate_password_hash(data['new_password'])
@@ -1025,6 +1031,8 @@ def update_brand_settings():
             'brand_name': settings.brand_name,
             'brand_slogan': settings.brand_slogan,
             'brand_description': settings.brand_description,
+            'brand_logo_url': settings.brand_logo_url,
+            'brand_favicon_url': settings.brand_favicon_url,
         }, "Brand settings updated successfully")
     
     except Exception as e:

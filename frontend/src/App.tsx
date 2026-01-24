@@ -8,7 +8,7 @@ import { SlidePreview } from './pages/SlidePreview';
 import { SettingsPage } from './pages/Settings';
 import Admin from './pages/Admin';
 import { useProjectStore } from './store/useProjectStore';
-import { useToast, GithubLink } from './components/shared';
+import { useToast } from './components/shared';
 import { BrandProvider } from './contexts/BrandContext';
 
 function App() {
@@ -45,7 +45,6 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <ToastContainer />
-        <GithubLink />
       </BrowserRouter>
     </BrandProvider>
   );

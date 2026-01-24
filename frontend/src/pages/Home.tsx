@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, FileText, FileEdit, ImagePlus, Paperclip, Palette, Lightbulb, Search, Settings, FolderOpen, HelpCircle } from 'lucide-react';
-import { Button, Textarea, Card, useToast, MaterialGeneratorModal, MaterialCenterModal, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList, HelpModal } from '@/components/shared';
+import { Sparkles, FileText, FileEdit, ImagePlus, Paperclip, Palette, Lightbulb, Search, Settings, FolderOpen } from 'lucide-react';
+import { Button, Textarea, Card, useToast, MaterialGeneratorModal, MaterialCenterModal, ReferenceFileList, ReferenceFileSelector, FilePreviewModal, ImagePreviewList } from '@/components/shared';
 import { TemplateSelector, getTemplateFile } from '@/components/shared/TemplateSelector';
 import { listUserTemplates, type UserTemplate, uploadReferenceFile, type ReferenceFile, associateFileToProject, triggerFileParse, uploadMaterial, associateMaterialsToProject, listProjects } from '@/api/endpoints';
 import { useProjectStore } from '@/store/useProjectStore';
@@ -23,7 +23,6 @@ export const Home: React.FC = () => {
   const [selectedPresetTemplateId, setSelectedPresetTemplateId] = useState<string | null>(null);
   const [isMaterialModalOpen, setIsMaterialModalOpen] = useState(false);
   const [isMaterialCenterOpen, setIsMaterialCenterOpen] = useState(false);
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const [userTemplates, setUserTemplates] = useState<UserTemplate[]>([]);
   const [referenceFiles, setReferenceFiles] = useState<ReferenceFile[]>([]);
@@ -53,19 +52,6 @@ export const Home: React.FC = () => {
       }
     };
     loadTemplates();
-  }, []);
-
-  // 首次访问自动弹出帮助模态框
-  useEffect(() => {
-    const hasSeenHelp = localStorage.getItem('hasSeenHelpModal');
-    if (!hasSeenHelp) {
-      // 延迟500ms打开，让页面先渲染完成
-      const timer = setTimeout(() => {
-        setIsHelpModalOpen(true);
-        localStorage.setItem('hasSeenHelpModal', 'true');
-      }, 500);
-      return () => clearTimeout(timer);
-    }
   }, []);
 
   const handleOpenMaterialModal = () => {
@@ -494,13 +480,13 @@ export const Home: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="flex items-center">
               <img
-                src="/logo.png"
-                alt={`${brandSettings.brand_name} Logo`}
+                src={brandSettings?.brand_logo_url || '/logo.png'}
+                alt={`${brandSettings?.brand_name || 'Logo'}`}
                 className="h-10 md:h-12 w-auto rounded-lg object-contain"
               />
             </div>
             <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-banana-600 via-orange-500 to-pink-500 bg-clip-text text-transparent">
-              {brandSettings.brand_name}
+              {brandSettings?.brand_name || '加载中...'}
             </span>
           </div>
           <div className="flex items-center gap-2 md:gap-3">
@@ -551,34 +537,6 @@ export const Home: React.FC = () => {
               <span className="hidden sm:inline">历史项目</span>
               <span className="sm:hidden">历史</span>
             </Button>
-            {/* 设置按钮已移至管理后台 */}
-            {/* <Button
-              variant="ghost"
-              size="sm"
-              icon={<Settings size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => navigate('/settings')}
-              className="text-xs md:text-sm hover:bg-banana-100/60 hover:shadow-sm hover:scale-105 transition-all duration-200 font-medium"
-            >
-              <span className="hidden md:inline">设置</span>
-              <span className="sm:hidden">设</span>
-            </Button> */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsHelpModalOpen(true)}
-              className="hidden md:inline-flex hover:bg-banana-50/50"
-            >
-              帮助
-            </Button>
-            {/* 移动端帮助按钮 */}
-            <Button
-              variant="ghost"
-              size="sm"
-              icon={<HelpCircle size={16} />}
-              onClick={() => setIsHelpModalOpen(true)}
-              className="md:hidden hover:bg-banana-100/60 hover:shadow-sm hover:scale-105 transition-all duration-200"
-              title="帮助"
-            />
           </div>
         </div>
       </nav>
@@ -589,7 +547,11 @@ export const Home: React.FC = () => {
         <div className="text-center mb-10 md:mb-16 space-y-4 md:space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-banana-200/50 shadow-sm mb-4">
             <span className="text-2xl animate-pulse"><Sparkles size={20} color="orange" /></span>
-            <span className="text-sm font-medium text-gray-700">{brandSettings.brand_description}</span>
+            {brandSettings ? (
+              <span className="text-sm font-medium text-gray-700">{brandSettings.brand_description}</span>
+            ) : (
+              <span className="text-sm font-medium text-gray-400 animate-pulse">加载中...</span>
+            )}
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
@@ -597,12 +559,12 @@ export const Home: React.FC = () => {
               backgroundSize: '200% auto',
               animation: 'gradient 3s ease infinite',
             }}>
-              {brandSettings.brand_name}
+              {brandSettings?.brand_name || '加载中...'}
             </span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light">
-            {brandSettings.brand_slogan}
+            {brandSettings?.brand_slogan || '加载中...'}
           </p>
 
           {/* 特性标签 */}
@@ -861,11 +823,6 @@ export const Home: React.FC = () => {
       />
       
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />
-      {/* 帮助模态框 */}
-      <HelpModal
-        isOpen={isHelpModalOpen}
-        onClose={() => setIsHelpModalOpen(false)}
-      />
     </div>
   );
 };

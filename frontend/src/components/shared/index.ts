@@ -15,14 +15,13 @@ export { ReferenceFileSelector } from './ReferenceFileSelector';
 export { FilePreviewModal } from './FilePreviewModal';
 export { ReferenceFileList } from './ReferenceFileList';
 export { MaterialSelector } from './MaterialSelector';
-export { GithubLink } from './GithubLink';
 export { Markdown } from './Markdown';
 export { AiRefineInput } from './AiRefineInput';
 export { ShimmerOverlay } from './ShimmerOverlay';
 export { ImagePreviewList } from './ImagePreviewList';
 export { ProjectResourcesList } from './ProjectResourcesList';
-export { HelpModal } from './HelpModal';
 export { ProjectSettingsModal } from './ProjectSettingsModal';
 export { ExportTasksPanel } from './ExportTasksPanel';
+
 
 

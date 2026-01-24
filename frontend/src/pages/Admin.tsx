@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Save, Eye, EyeOff, Settings as SettingsIcon, Palette } from 'lucide-react';
+import { Lock, Save, Eye, EyeOff, Settings as SettingsIcon, Palette, Upload, X } from 'lucide-react';
 import { Button, Input, Textarea, Toast } from '../components/shared';
 import { apiClient } from '../api/client';
 import { Settings } from './Settings';
+import { uploadMaterial } from '../api/endpoints';
 
 interface BrandSettings {
   brand_name: string;
   brand_slogan: string;
   brand_description: string;
+  brand_logo_url: string;
+  brand_favicon_url: string;
 }
 
 type TabType = 'brand' | 'system';
@@ -26,10 +29,14 @@ export default function Admin() {
     brand_name: '',
     brand_slogan: '',
     brand_description: '',
+    brand_logo_url: '',
+    brand_favicon_url: '',
   });
   
   const [newPassword, setNewPassword] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
@@ -100,6 +107,58 @@ export default function Admin() {
       setToast({ message, type: 'error' });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 检查文件类型
+    if (!file.type.startsWith('image/')) {
+      setToast({ message: '请上传图片文件', type: 'error' });
+      return;
+    }
+
+    setIsUploadingLogo(true);
+    try {
+      const response = await uploadMaterial(file, null);
+      if (response?.data?.url) {
+        setBrandSettings({ ...brandSettings, brand_logo_url: response.data.url });
+        setToast({ message: 'Logo 上传成功', type: 'success' });
+      }
+    } catch (error) {
+      console.error('Failed to upload logo:', error);
+      setToast({ message: 'Logo 上传失败', type: 'error' });
+    } finally {
+      setIsUploadingLogo(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleFaviconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 检查文件类型
+    if (!file.type.startsWith('image/')) {
+      setToast({ message: '请上传图片文件', type: 'error' });
+      return;
+    }
+
+    setIsUploadingFavicon(true);
+    try {
+      const response = await uploadMaterial(file, null);
+      if (response?.data?.url) {
+        setBrandSettings({ ...brandSettings, brand_favicon_url: response.data.url });
+        setToast({ message: 'Favicon 上传成功', type: 'success' });
+      }
+    } catch (error) {
+      console.error('Failed to upload favicon:', error);
+      setToast({ message: 'Favicon 上传失败', type: 'error' });
+    } finally {
+      setIsUploadingFavicon(false);
+      e.target.value = '';
     }
   };
 
@@ -216,6 +275,102 @@ export default function Admin() {
           <div className="p-6 md:p-8">
             {activeTab === 'brand' ? (
               <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    品牌 Logo
+                  </label>
+                  <div className="flex items-start gap-4">
+                    {brandSettings.brand_logo_url && (
+                      <div className="relative">
+                        <img
+                          src={brandSettings.brand_logo_url}
+                          alt="Brand Logo"
+                          className="w-24 h-24 object-contain rounded-lg border border-gray-200"
+                        />
+                        <button
+                          onClick={() => setBrandSettings({ ...brandSettings, brand_logo_url: '' })}
+                          className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <label className="cursor-pointer">
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-banana-400 transition-colors">
+                          <div className="flex flex-col items-center gap-2">
+                            <Upload size={24} className="text-gray-400" />
+                            <span className="text-sm text-gray-600">
+                              {isUploadingLogo ? '上传中...' : '点击上传 Logo'}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              建议尺寸：200x200px，支持 PNG/JPG/SVG
+                            </span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleLogoUpload}
+                          disabled={isUploadingLogo}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    将显示在导航栏左上角
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    网站图标 (Favicon)
+                  </label>
+                  <div className="flex items-start gap-4">
+                    {brandSettings.brand_favicon_url && (
+                      <div className="relative">
+                        <img
+                          src={brandSettings.brand_favicon_url}
+                          alt="Favicon"
+                          className="w-16 h-16 object-contain rounded border border-gray-200"
+                        />
+                        <button
+                          onClick={() => setBrandSettings({ ...brandSettings, brand_favicon_url: '' })}
+                          className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <label className="cursor-pointer">
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-banana-400 transition-colors">
+                          <div className="flex flex-col items-center gap-2">
+                            <Upload size={24} className="text-gray-400" />
+                            <span className="text-sm text-gray-600">
+                              {isUploadingFavicon ? '上传中...' : '点击上传 Favicon'}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              建议尺寸：32x32px 或 64x64px，支持 PNG/ICO
+                            </span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFaviconUpload}
+                          disabled={isUploadingFavicon}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    将显示在浏览器标签页
+                  </p>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     品牌名称

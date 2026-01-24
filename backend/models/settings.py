@@ -39,6 +39,8 @@ class Settings(db.Model):
     brand_name = db.Column(db.String(100), nullable=True)  # 品牌名称
     brand_slogan = db.Column(db.String(200), nullable=True)  # 品牌标语
     brand_description = db.Column(db.String(500), nullable=True)  # 品牌描述
+    brand_logo_url = db.Column(db.String(500), nullable=True)  # 品牌 Logo URL
+    brand_favicon_url = db.Column(db.String(500), nullable=True)  # 品牌 Favicon URL
     admin_password_hash = db.Column(db.String(200), nullable=True)  # 管理员密码哈希
     
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
@@ -69,6 +71,8 @@ class Settings(db.Model):
             'brand_name': self.brand_name,
             'brand_slogan': self.brand_slogan,
             'brand_description': self.brand_description,
+            'brand_logo_url': self.brand_logo_url,
+            'brand_favicon_url': self.brand_favicon_url,
             'has_admin_password': bool(self.admin_password_hash),
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,

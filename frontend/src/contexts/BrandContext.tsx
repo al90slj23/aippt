@@ -5,41 +5,51 @@ interface BrandSettings {
   brand_name: string;
   brand_slogan: string;
   brand_description: string;
+  brand_logo_url: string;
+  brand_favicon_url: string;
 }
 
-const defaultSettings: BrandSettings = {
-  brand_name: '元愈PPT',
-  brand_slogan: 'Vibe your PPT like vibing code',
-  brand_description: '基于 nano banana pro🍌 的原生 AI PPT 生成器',
-};
-
 interface BrandContextType {
-  brandSettings: BrandSettings;
+  brandSettings: BrandSettings | null;
   isLoading: boolean;
   reload: () => Promise<void>;
 }
 
 const BrandContext = createContext<BrandContextType>({
-  brandSettings: defaultSettings,
+  brandSettings: null,
   isLoading: true,
   reload: async () => {},
 });
 
 export function BrandProvider({ children }: { children: React.ReactNode }) {
-  const [brandSettings, setBrandSettings] = useState<BrandSettings>(defaultSettings);
+  const [brandSettings, setBrandSettings] = useState<BrandSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadBrandSettings = async () => {
     try {
       const response = await apiClient.get('/api/settings/brand');
-      setBrandSettings(response.data.data);
+      const settings = response.data.data;
+      setBrandSettings(settings);
       
       // 更新页面标题
-      document.title = `${response.data.data.brand_name} | AI 原生 PPT 生成器`;
+      document.title = `${settings.brand_name || '元愈PPT'} | AI 原生 PPT 生成器`;
+      
+      // 更新 favicon
+      if (settings.brand_favicon_url) {
+        const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+        if (link) {
+          link.href = settings.brand_favicon_url;
+        } else {
+          const newLink = document.createElement('link');
+          newLink.rel = 'icon';
+          newLink.href = settings.brand_favicon_url;
+          document.head.appendChild(newLink);
+        }
+      }
     } catch (error) {
       console.error('Failed to load brand settings:', error);
-      // 使用默认值
-      setBrandSettings(defaultSettings);
+      // 加载失败时设置为 null，让组件自行处理
+      setBrandSettings(null);
     } finally {
       setIsLoading(false);
     }
