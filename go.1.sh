@@ -55,8 +55,8 @@ else
 fi
 
 # Git push
-echo -e "${CYAN}→ git push origin main...${NC}"
-if git push origin main; then
+echo -e "${CYAN}→ git push mine main...${NC}"
+if git push mine main; then
     echo -e "${GREEN}  ✓ 推送成功${NC}"
     GITHUB_RESULT="成功"
 else
