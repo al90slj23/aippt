@@ -27,14 +27,15 @@ call_ai_api() {
     local API_URL="https://api.deepseek.com/chat/completions"
     local MODEL="deepseek-chat"
 
-    # 使用 Python 调用 API
-    local RESULT=$(python3 -c "
+    # 使用 Python 调用 API（通过环境变量传递参数避免转义问题）
+    local RESULT=$(PROMPT_TEXT="$PROMPT" SYSTEM_TEXT="$SYSTEM_PROMPT" python3 -c "
 import json
 import urllib.request
 import sys
+import os
 
-prompt = '''${PROMPT}'''
-system_prompt = '''${SYSTEM_PROMPT}'''
+prompt = os.environ.get('PROMPT_TEXT', '')
+system_prompt = os.environ.get('SYSTEM_TEXT', '')
 
 data = {
     'model': '${MODEL}',
