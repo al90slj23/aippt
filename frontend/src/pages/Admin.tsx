@@ -48,7 +48,7 @@ export default function Admin() {
         password,
       });
 
-      if (response.data.valid) {
+      if (response.data.data.valid) {
         setIsAuthenticated(true);
         setToast({ message: '验证成功', type: 'success' });
       } else {
