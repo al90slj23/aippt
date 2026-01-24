@@ -951,42 +951,38 @@ export const SlidePreview: React.FC = () => {
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      {/* 顶部导航栏 */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：主页按钮 + Logo + 标题 */}
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<Home size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => navigate('/')}
+            >
+              主页
+            </Button>
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="text-xl md:text-2xl">🍌</span>
+              <span className="text-base md:text-xl font-bold">元愈PPT</span>
+            </div>
+            <span className="text-gray-400 hidden lg:inline">|</span>
+            <span className="text-sm md:text-lg font-semibold hidden lg:inline">预览</span>
+          </div>
+          
+          {/* 右侧：空白 */}
+          <div></div>
+        </div>
+      </div>
+      
       {/* 进度导航条 */}
       <ProgressSteps currentStep={3} projectId={projectId!} />
       
-      {/* 顶栏 */}
+      {/* 工具栏 - 保留工具按钮 */}
       <header className="h-14 md:h-16 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-3 md:px-6 flex-shrink-0">
         <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            icon={<Home size={16} className="md:w-[18px] md:h-[18px]" />}
-            onClick={() => navigate('/')}
-            className="hidden sm:inline-flex flex-shrink-0"
-          >
-            <span className="hidden md:inline">主页</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
-            onClick={() => {
-              if (fromHistory) {
-                navigate('/history');
-              } else {
-                navigate(`/project/${projectId}/detail`);
-              }
-            }}
-            className="flex-shrink-0"
-          >
-            <span className="hidden sm:inline">返回</span>
-          </Button>
-          <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
-            <span className="text-xl md:text-2xl">🍌</span>
-            <span className="text-base md:text-xl font-bold truncate">元愈PPT</span>
-          </div>
-          <span className="text-gray-400 hidden md:inline">|</span>
-          <span className="text-sm md:text-lg font-semibold truncate hidden sm:inline">预览</span>
         </div>
         <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
           <Button
@@ -1068,58 +1064,6 @@ export const SlidePreview: React.FC = () => {
               )}
             </div>
           )}
-          
-          <div className="relative">
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<Download size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => {
-                setShowExportMenu(!showExportMenu);
-                setShowExportTasksPanel(false);
-              }}
-              disabled={isMultiSelectMode ? selectedPageIds.size === 0 : !hasAllImages}
-              className="text-xs md:text-sm"
-            >
-              <span className="hidden sm:inline">
-                {isMultiSelectMode && selectedPageIds.size > 0 
-                  ? `导出 (${selectedPageIds.size})` 
-                  : '导出'}
-              </span>
-              <span className="sm:hidden">
-                {isMultiSelectMode && selectedPageIds.size > 0 
-                  ? `(${selectedPageIds.size})` 
-                  : '导出'}
-              </span>
-            </Button>
-            {showExportMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
-                {isMultiSelectMode && selectedPageIds.size > 0 && (
-                  <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-100">
-                    将导出选中的 {selectedPageIds.size} 页
-                  </div>
-                )}
-                <button
-                  onClick={() => handleExport('pptx')}
-                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
-                >
-                  导出为 PPTX
-                </button>
-                <button
-                  onClick={() => handleExport('editable-pptx')}
-                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
-                >
-                  导出可编辑 PPTX（Beta）
-                </button>
-                <button
-                  onClick={() => handleExport('pdf')}
-                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
-                >
-                  导出为 PDF
-                </button>
-              </div>
-            )}
-          </div>
         </div>
       </header>
 

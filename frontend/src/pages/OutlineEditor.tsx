@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { ArrowLeft, Save, ArrowRight, Plus, FileText, Sparkle, Download } from 'lucide-react';
+import { ArrowLeft, Save, ArrowRight, Plus, FileText, Sparkle, Download, Home } from 'lucide-react';
 import {
   DndContext,
   closestCenter,
@@ -169,28 +169,18 @@ export const OutlineEditor: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* 进度导航条 */}
-      <ProgressSteps currentStep={1} projectId={projectId!} />
-      
-      {/* 顶栏 */}
-      <header className="bg-white shadow-sm border-b border-gray-200 px-3 md:px-6 py-2 md:py-3 flex-shrink-0">
-        <div className="flex items-center justify-between gap-2 md:gap-4">
-          {/* 左侧：Logo 和标题 */}
-          <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+      {/* 顶部导航栏 */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：主页按钮 + Logo + 标题 */}
+          <div className="flex items-center gap-2 md:gap-4">
             <Button
               variant="ghost"
               size="sm"
-              icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => {
-                if (fromHistory) {
-                  navigate('/history');
-                } else {
-                  navigate('/');
-                }
-              }}
-              className="flex-shrink-0"
+              icon={<Home size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => navigate('/')}
             >
-              <span className="hidden sm:inline">返回</span>
+              主页
             </Button>
             <div className="flex items-center gap-1.5 md:gap-2">
               <span className="text-xl md:text-2xl">🍌</span>
@@ -198,6 +188,21 @@ export const OutlineEditor: React.FC = () => {
             </div>
             <span className="text-gray-400 hidden lg:inline">|</span>
             <span className="text-sm md:text-lg font-semibold hidden lg:inline">编辑大纲</span>
+          </div>
+          
+          {/* 右侧：空白 */}
+          <div></div>
+        </div>
+      </div>
+      
+      {/* 进度导航条 */}
+      <ProgressSteps currentStep={1} projectId={projectId!} />
+      
+      {/* AI 输入框栏 */}
+      <header className="bg-white shadow-sm border-b border-gray-200 px-3 md:px-6 py-2 md:py-3 flex-shrink-0">
+        <div className="flex items-center justify-between gap-2 md:gap-4">
+          {/* 左侧：空白占位 */}
+          <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
           </div>
           
           {/* 中间：AI 修改输入框 */}
