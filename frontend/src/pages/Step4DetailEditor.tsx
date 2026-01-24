@@ -7,7 +7,7 @@ import { useProjectStore } from '@/store/useProjectStore';
 import { refineDescriptions } from '@/api/endpoints';
 import { exportDescriptionsToMarkdown } from '@/utils/projectUtils';
 
-export const DetailEditor: React.FC = () => {
+export const Step4DetailEditor: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { projectId } = useParams<{ projectId: string }>();

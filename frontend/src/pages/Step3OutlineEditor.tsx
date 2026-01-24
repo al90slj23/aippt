@@ -51,7 +51,7 @@ const SortableCard: React.FC<{
   );
 };
 
-export const OutlineEditor: React.FC = () => {
+export const Step3OutlineEditor: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { projectId } = useParams<{ projectId: string }>();

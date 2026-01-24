@@ -36,7 +36,7 @@ import { getPageImageVersions, setCurrentImageVersion, updateProject, uploadTemp
 import type { ImageVersion, DescriptionContent, ExportExtractorMethod, ExportInpaintMethod, Page } from '@/types';
 import { normalizeErrorMessage } from '@/utils';
 
-export const SlidePreview: React.FC = () => {
+export const Step5SlidePreview: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { projectId } = useParams<{ projectId: string }>();

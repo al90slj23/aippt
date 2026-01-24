@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HomeSimple } from './pages/HomeSimple';
-import { CreateProject } from './pages/CreateProject';
+import { Step1CreateProject } from './pages/Step1CreateProject';
 import { History } from './pages/History';
-import { OutlineEditor } from './pages/OutlineEditor';
-import { DetailEditor } from './pages/DetailEditor';
-import { SlidePreview } from './pages/SlidePreview';
+import { Step3OutlineEditor } from './pages/Step3OutlineEditor';
+import { Step4DetailEditor } from './pages/Step4DetailEditor';
+import { Step5SlidePreview } from './pages/Step5SlidePreview';
 import Admin from './pages/Admin';
 import { useProjectStore } from './store/useProjectStore';
 import { useToast } from './components/shared';
@@ -36,13 +36,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeSimple />} />
-          <Route path="/create" element={<CreateProject />} />
+          <Route path="/create" element={<Step1CreateProject />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Navigate to="/admin" replace />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/project/:projectId/outline" element={<OutlineEditor />} />
-          <Route path="/project/:projectId/detail" element={<DetailEditor />} />
-          <Route path="/project/:projectId/preview" element={<SlidePreview />} />
+          <Route path="/project/:projectId/outline" element={<Step3OutlineEditor />} />
+          <Route path="/project/:projectId/detail" element={<Step4DetailEditor />} />
+          <Route path="/project/:projectId/preview" element={<Step5SlidePreview />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <ToastContainer />

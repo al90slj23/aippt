@@ -9,7 +9,7 @@ import { PRESET_STYLES } from '@/config/presetStyles';
 
 type CreationType = 'idea' | 'outline' | 'description';
 
-export const CreateProject: React.FC = () => {
+export const Step1CreateProject: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const creationType = (location.state as any)?.type as CreationType || 'idea';
