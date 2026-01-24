@@ -903,7 +903,9 @@ def get_brand_settings():
             "data": {
                 "brand_name": "元愈PPT",
                 "brand_slogan": "Vibe your PPT like vibing code",
-                "brand_description": "基于 nano banana pro🍌 的原生 AI PPT 生成器"
+                "brand_description": "基于 nano banana pro🍌 的原生 AI PPT 生成器",
+                "brand_logo_url": "/logo.png",
+                "brand_favicon_url": "/favicon.svg"
             }
         }
     """
@@ -913,6 +915,8 @@ def get_brand_settings():
             'brand_name': settings.brand_name or '元愈PPT',
             'brand_slogan': settings.brand_slogan or 'Vibe your PPT like vibing code',
             'brand_description': settings.brand_description or '基于 nano banana pro🍌 的原生 AI PPT 生成器',
+            'brand_logo_url': settings.brand_logo_url or '/logo.png',
+            'brand_favicon_url': settings.brand_favicon_url or '/favicon.svg',
         })
     except Exception as e:
         logger.error(f"Error getting brand settings: {str(e)}")
