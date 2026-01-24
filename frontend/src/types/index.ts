@@ -123,6 +123,7 @@ export interface Settings {
   ai_provider_format: 'openai' | 'gemini';
   api_base_url?: string;
   api_key_length: number;
+  api_key_masked?: string;  // 遮蔽后的 API Key
   image_resolution: string;
   image_aspect_ratio: string;
   max_description_workers: number;
@@ -131,6 +132,7 @@ export interface Settings {
   image_model?: string;
   mineru_api_base?: string;
   mineru_token_length: number;
+  mineru_token_masked?: string;  // 遮蔽后的 MinerU Token
   image_caption_model?: string;
   output_language: 'zh' | 'en' | 'ja' | 'auto';
   // 推理模式配置（分别控制文本和图像）
@@ -139,6 +141,7 @@ export interface Settings {
   enable_image_reasoning: boolean;
   image_thinking_budget: number;
   baidu_ocr_api_key_length: number;
+  baidu_ocr_api_key_masked?: string;  // 遮蔽后的百度 OCR API Key
   created_at?: string;
   updated_at?: string;
 }

@@ -53,6 +53,7 @@ class Settings(db.Model):
             'ai_provider_format': self.ai_provider_format,
             'api_base_url': self.api_base_url,
             'api_key_length': len(self.api_key) if self.api_key else 0,
+            'api_key_masked': self._mask_sensitive_value(self.api_key) if self.api_key else None,
             'image_resolution': self.image_resolution,
             'image_aspect_ratio': self.image_aspect_ratio,
             'max_description_workers': self.max_description_workers,
@@ -61,6 +62,7 @@ class Settings(db.Model):
             'image_model': self.image_model,
             'mineru_api_base': self.mineru_api_base,
             'mineru_token_length': len(self.mineru_token) if self.mineru_token else 0,
+            'mineru_token_masked': self._mask_sensitive_value(self.mineru_token) if self.mineru_token else None,
             'image_caption_model': self.image_caption_model,
             'output_language': self.output_language,
             'enable_text_reasoning': self.enable_text_reasoning,
@@ -68,6 +70,7 @@ class Settings(db.Model):
             'enable_image_reasoning': self.enable_image_reasoning,
             'image_thinking_budget': self.image_thinking_budget,
             'baidu_ocr_api_key_length': len(self.baidu_ocr_api_key) if self.baidu_ocr_api_key else 0,
+            'baidu_ocr_api_key_masked': self._mask_sensitive_value(self.baidu_ocr_api_key) if self.baidu_ocr_api_key else None,
             'brand_name': self.brand_name,
             'brand_slogan': self.brand_slogan,
             'brand_description': self.brand_description,
@@ -77,6 +80,33 @@ class Settings(db.Model):
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
+
+    @staticmethod
+    def _mask_sensitive_value(value: str, show_start: int = 8, show_end: int = 6) -> str:
+        """
+        遮蔽敏感信息，只显示开头和结尾部分
+        
+        Args:
+            value: 要遮蔽的值
+            show_start: 显示开头的字符数
+            show_end: 显示结尾的字符数
+            
+        Returns:
+            遮蔽后的字符串，例如：sk-proj-***...***abc123
+        """
+        if not value:
+            return ''
+        
+        length = len(value)
+        
+        # 如果值太短，只显示部分
+        if length <= show_start + show_end:
+            if length <= 4:
+                return '*' * length
+            return value[:2] + '*' * (length - 4) + value[-2:]
+        
+        # 正常情况：显示开头和结尾
+        return f"{value[:show_start]}***...***{value[-show_end:]}"
 
     @staticmethod
     def get_settings():

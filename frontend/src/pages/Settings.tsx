@@ -573,9 +573,16 @@ export const Settings: React.FC = () => {
     }
 
     // text, password, number 类型
-    const placeholder = field.sensitiveField && settings && field.lengthKey
-      ? `已设置（长度: ${settings[field.lengthKey]}）`
-      : field.placeholder || '';
+    // 对于敏感字段，如果有遮蔽值则显示，否则显示长度
+    let placeholder = field.placeholder || '';
+    if (field.sensitiveField && settings) {
+      const maskedKey = `${field.key}_masked` as keyof SettingsType;
+      if (settings[maskedKey]) {
+        placeholder = `当前值: ${settings[maskedKey]}`;
+      } else if (field.lengthKey && settings[field.lengthKey]) {
+        placeholder = `已设置（长度: ${settings[field.lengthKey]}）`;
+      }
+    }
 
     // 判断是否禁用（思考负载字段在对应开关关闭时禁用）
     let isDisabled = false;
