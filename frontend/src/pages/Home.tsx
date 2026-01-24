@@ -551,7 +551,8 @@ export const Home: React.FC = () => {
               <span className="hidden sm:inline">历史项目</span>
               <span className="sm:hidden">历史</span>
             </Button>
-            <Button
+            {/* 设置按钮已移至管理后台 */}
+            {/* <Button
               variant="ghost"
               size="sm"
               icon={<Settings size={16} className="md:w-[18px] md:h-[18px]" />}
@@ -560,7 +561,7 @@ export const Home: React.FC = () => {
             >
               <span className="hidden md:inline">设置</span>
               <span className="sm:hidden">设</span>
-            </Button>
+            </Button> */}
             <Button
               variant="ghost"
               size="sm"
