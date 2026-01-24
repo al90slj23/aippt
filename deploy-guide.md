@@ -1,5 +1,23 @@
 # 部署指南
 
+## 环境配置
+
+### DeepSeek API Key（用于 AI 生成提交信息）
+
+1. 获取 API Key：https://platform.deepseek.com/api_keys
+2. 设置环境变量：
+
+```bash
+# 方法1：在 ~/.zshrc 或 ~/.bashrc 中添加
+export DEEPSEEK_API_KEY=your_api_key_here
+# 或
+export APIKEY_MacOS_Code_DeepSeek=your_api_key_here
+
+# 方法2：创建本地配置文件
+cp .env.deploy .env.deploy.local
+# 编辑 .env.deploy.local，填入你的 API Key
+```
+
 ## 快速开始
 
 ### 本地开发
