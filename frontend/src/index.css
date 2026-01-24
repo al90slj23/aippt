@@ -66,6 +66,16 @@ body {
   background: var(--banana-yellow-dark);
 }
 
+/* 隐藏滚动条但保持滚动功能 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 /* 移动端触摸优化 */
 .touch-manipulation {
   touch-action: manipulation;
@@ -89,6 +99,16 @@ body {
   }
   50% {
     background-position: 100% 50%;
+  }
+}
+
+/* 彩虹流动动画 */
+@keyframes rainbow-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
   }
 }
 

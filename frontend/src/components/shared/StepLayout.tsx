@@ -11,6 +11,7 @@ export interface ActionButton {
   variant?: 'primary' | 'secondary' | 'ghost';
   disabled?: boolean;
   className?: string;
+  style?: React.CSSProperties; // 添加 style 属性支持
   isMainAction?: boolean; // 是否是主要操作按钮（中间带特效）
 }
 
@@ -79,13 +80,17 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
   const { brandSettings } = useBrand();
   const [isAiRefineExpanded, setIsAiRefineExpanded] = React.useState(false);
 
-  // 找到主要操作按钮（中间带特效的按钮）
-  const mainActionButton = actionButtons?.find(btn => btn.isMainAction);
-  const otherButtons = actionButtons?.filter(btn => !btn.isMainAction) || [];
-  
-  // 将主要按钮放在中间
-  const leftButtons = otherButtons.slice(0, Math.ceil(otherButtons.length / 2));
-  const rightButtons = otherButtons.slice(Math.ceil(otherButtons.length / 2));
+  // 监听 Esc 键关闭弹窗
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isAiRefineExpanded) {
+        setIsAiRefineExpanded(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isAiRefineExpanded]);
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
@@ -123,61 +128,41 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
 
       {/* 操作面板（可选） */}
       {actionButtons && actionButtons.length > 0 && (
-        <div className="bg-gradient-to-r from-banana-50 via-orange-50/30 to-pink-50/20 border-b border-gray-200 px-3 md:px-6 py-4 md:py-5 flex-shrink-0">
+        <div className="bg-white border-b border-gray-100 px-3 md:px-6 py-4 md:py-5 flex-shrink-0 shadow-sm">
           <div className="max-w-5xl mx-auto space-y-4">
-          {/* 按钮组 */}
+          {/* 按钮组 - 按照定义顺序显示 */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-            {/* 左侧按钮 */}
-            {leftButtons.map((button, index) => (
-              <Button
-                key={`left-${index}`}
-                variant={button.variant || 'secondary'}
-                icon={button.icon}
-                onClick={button.onClick}
-                disabled={button.disabled}
-                className={`flex-1 sm:flex-initial text-sm md:text-base px-6 py-3 ${button.className || ''}`}
-              >
-                {button.label}
-              </Button>
-            ))}
-
-            {/* 中间主要按钮（带特效） */}
-            {mainActionButton && aiRefine && (
-              <Button
-                variant={mainActionButton.variant || 'primary'}
-                icon={
-                  mainActionButton.icon || (
-                    <Sparkles size={18} className="md:w-[20px] md:h-[20px] animate-pulse" />
-                  )
-                }
-                onClick={() => {
-                  if (aiRefine) {
-                    setIsAiRefineExpanded(!isAiRefineExpanded);
-                  }
-                  mainActionButton.onClick();
-                }}
-                disabled={mainActionButton.disabled}
-                className={`flex-1 sm:flex-initial text-sm md:text-base px-8 py-3 relative overflow-hidden group ${mainActionButton.className || ''}`}
-              >
-                <span className="relative z-10">{mainActionButton.label}</span>
-                {/* 动态光效 */}
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-              </Button>
-            )}
-
-            {/* 右侧按钮 */}
-            {rightButtons.map((button, index) => (
-              <Button
-                key={`right-${index}`}
-                variant={button.variant || 'secondary'}
-                icon={button.icon}
-                onClick={button.onClick}
-                disabled={button.disabled}
-                className={`flex-1 sm:flex-initial text-sm md:text-base px-6 py-3 ${button.className || ''}`}
-              >
-                {button.label}
-              </Button>
-            ))}
+            {actionButtons.map((button, index) => {
+              // 如果是主要按钮且有 AI 修改功能，添加特殊处理
+              const isMainAction = button.isMainAction && aiRefine;
+              
+              return (
+                <Button
+                  key={index}
+                  variant={button.variant || 'secondary'}
+                  icon={button.icon || (isMainAction ? <Sparkles size={18} className="md:w-[20px] md:h-[20px] animate-pulse" /> : undefined)}
+                  onClick={() => {
+                    if (isMainAction) {
+                      setIsAiRefineExpanded(!isAiRefineExpanded);
+                    }
+                    button.onClick();
+                  }}
+                  disabled={button.disabled}
+                  className={`flex-1 sm:flex-initial text-sm md:text-base ${isMainAction ? 'px-8 py-3 relative overflow-hidden group' : 'px-6 py-3'} ${button.className || ''}`}
+                  style={button.style}
+                >
+                  {isMainAction ? (
+                    <>
+                      <span className="relative z-10">{button.label}</span>
+                      {/* 动态光效 */}
+                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                    </>
+                  ) : (
+                    button.label
+                  )}
+                </Button>
+              );
+            })}
           </div>
 
           {/* 进度提示 */}
@@ -196,36 +181,64 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
             </div>
           )}
 
-          {/* AI 修改输入框 - 可展开 */}
+          {/* AI 修改输入框 - Spotlight 风格浮动弹窗 */}
           {aiRefine && isAiRefineExpanded && (
-            <div className="animate-in slide-in-from-top duration-300">
-              <div className="bg-white rounded-xl shadow-lg border-2 border-banana-300 p-4 md:p-6">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-banana-400 to-orange-400 rounded-full flex items-center justify-center">
-                    <Sparkles size={20} className="text-white" />
+            <>
+              {/* 背景遮罩 */}
+              <div 
+                className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 animate-in fade-in duration-200"
+                onClick={() => setIsAiRefineExpanded(false)}
+              />
+              
+              {/* 浮动输入框 */}
+              <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-50 animate-in slide-in-from-top-4 fade-in duration-300">
+                <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+                  {/* 标题栏 */}
+                  <div className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-banana-50 to-orange-50 border-b border-gray-200">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-banana-400 to-orange-400 rounded-full flex items-center justify-center shadow-md">
+                      <Sparkles size={20} className="text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        深度优化大纲
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        告诉我您的想法和思路
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setIsAiRefineExpanded(false)}
+                      className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-white/80 rounded-lg transition-colors"
+                    >
+                      <span className="text-gray-400 text-2xl leading-none">×</span>
+                    </button>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
-                      AI 智能修改
-                    </h3>
+                  
+                  {/* 输入区域 */}
+                  <div className="p-6">
                     <AiRefineInput
                       title=""
                       placeholder={aiRefine.placeholder}
-                      onSubmit={aiRefine.onSubmit}
+                      onSubmit={async (prompt) => {
+                        await aiRefine.onSubmit(prompt);
+                        setIsAiRefineExpanded(false);
+                      }}
                       disabled={false}
                       className="!p-0 !bg-transparent !border-0"
                       onStatusChange={aiRefine.onStatusChange}
                     />
                   </div>
-                  <button
-                    onClick={() => setIsAiRefineExpanded(false)}
-                    className="flex-shrink-0 p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  >
-                    <span className="text-gray-400 text-xl">×</span>
-                  </button>
+                  
+                  {/* 提示信息 */}
+                  <div className="px-6 pb-4">
+                    <div className="flex items-start gap-2 text-xs text-gray-500">
+                      <span className="flex-shrink-0 mt-0.5">💡</span>
+                      <span>按 Enter 提交，Shift + Enter 换行，Esc 关闭</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
@@ -233,13 +246,13 @@ export const StepLayout: React.FC<StepLayoutProps> = ({
 
       {/* 上下文信息栏（可选） */}
       {contextBar && (
-        <div className="bg-banana-50 border-b border-banana-100 px-3 md:px-6 py-2 md:py-3 max-h-32 overflow-y-auto flex-shrink-0">
+        <div className="bg-white border-b border-gray-100 px-3 md:px-6 py-3 md:py-4 max-h-32 overflow-y-auto flex-shrink-0 shadow-sm">
           {contextBar}
         </div>
       )}
 
       {/* 主内容区域 */}
-      <div className="flex-1 overflow-hidden pb-28 md:pb-32">
+      <div className="flex-1 flex flex-col min-h-0">
         {children}
       </div>
 

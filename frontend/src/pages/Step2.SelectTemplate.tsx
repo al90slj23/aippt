@@ -64,6 +64,9 @@ export const Step2SelectTemplate: React.FC = () => {
       return;
     }
 
+    // 立即设置 loading 状态
+    useProjectStore.getState().setGlobalLoading(true);
+
     try {
       // 检查是否是首次使用
       try {
@@ -90,6 +93,7 @@ export const Step2SelectTemplate: React.FC = () => {
       const newProjectId = localStorage.getItem('currentProjectId');
       if (!newProjectId) {
         show({ message: '项目创建失败', type: 'error' });
+        useProjectStore.getState().setGlobalLoading(false);
         return;
       }
       
@@ -101,6 +105,7 @@ export const Step2SelectTemplate: React.FC = () => {
       }
     } catch (error: any) {
       console.error('创建项目失败:', error);
+      useProjectStore.getState().setGlobalLoading(false);
     }
   };
 

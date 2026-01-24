@@ -37,6 +37,18 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
     }
   }, [page.outline_content.title, page.outline_content.points, isEditing]);
 
+  // 监听 Esc 键关闭编辑弹窗
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isEditing) {
+        handleCancel();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isEditing]);
+
   const handleSave = () => {
     onUpdate({
       outline_content: {
@@ -54,73 +66,39 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
   };
 
   return (
-    <Card
-      className={`p-4 relative ${
-        isSelected ? 'border-2 border-banana-500 shadow-yellow' : ''
-      }`}
-      onClick={!isEditing ? onClick : undefined}
-    >
-      <ShimmerOverlay show={isAiRefining} />
-      
-      <div className="flex items-start gap-3 relative z-10">
-        {/* 拖拽手柄 */}
-        <div 
-          {...dragHandleProps}
-          className="flex-shrink-0 cursor-move text-gray-400 hover:text-gray-600 pt-1"
-        >
-          <GripVertical size={20} />
-        </div>
-
-        {/* 内容区 */}
-        <div className="flex-1 min-w-0">
-          {/* 页码和章节 */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm font-semibold text-gray-900">
-              第 {index + 1} 页
-            </span>
-            {page.part && (
-              <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
-                {page.part}
-              </span>
-            )}
+    <>
+      <Card
+        className={`p-4 relative ${
+          isSelected ? 'border-2 border-banana-500 shadow-yellow' : ''
+        }`}
+        onClick={!isEditing ? onClick : undefined}
+      >
+        <ShimmerOverlay show={isAiRefining} />
+        
+        <div className="flex items-start gap-3 relative z-10">
+          {/* 拖拽手柄 */}
+          <div 
+            {...dragHandleProps}
+            className="flex-shrink-0 cursor-move text-gray-400 hover:text-gray-600 pt-1"
+          >
+            <GripVertical size={20} />
           </div>
 
-          {isEditing ? (
-            /* 编辑模式 */
-            <div className="space-y-3" onClick={(e) => e.stopPropagation()}>
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-banana-500"
-                placeholder="标题"
-              />
-              <textarea
-                value={editPoints}
-                onChange={(e) => setEditPoints(e.target.value)}
-                rows={5}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-banana-500 resize-none"
-                placeholder="要点（每行一个）"
-              />
-              <div className="flex justify-end gap-2">
-                <button
-                  onClick={handleCancel}
-                  className="px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <X size={16} className="inline mr-1" />
-                  取消
-                </button>
-                <button
-                  onClick={handleSave}
-                  className="px-3 py-1.5 text-sm bg-banana-500 text-black rounded-lg hover:bg-banana-600 transition-colors"
-                >
-                  <Check size={16} className="inline mr-1" />
-                  保存
-                </button>
-              </div>
+          {/* 内容区 */}
+          <div className="flex-1 min-w-0">
+            {/* 页码和章节 */}
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-sm font-semibold text-gray-900">
+                第 {index + 1} 页
+              </span>
+              {page.part && (
+                <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
+                  {page.part}
+                </span>
+              )}
             </div>
-          ) : (
-            /* 查看模式 */
+
+            {/* 查看模式 */}
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">
                 {page.outline_content.title}
@@ -129,11 +107,9 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
                 <Markdown>{page.outline_content.points.join('\n')}</Markdown>
               </div>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* 操作按钮 */}
-        {!isEditing && (
+          {/* 操作按钮 */}
           <div className="flex-shrink-0 flex gap-2">
             <button
               onClick={(e) => {
@@ -158,10 +134,100 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
               <Trash2 size={16} />
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      </Card>
+
+      {/* Spotlight 风格编辑弹窗 */}
+      {isEditing && (
+        <>
+          {/* 背景遮罩 */}
+          <div 
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 animate-in fade-in duration-200"
+            onClick={handleCancel}
+          />
+          
+          {/* 浮动编辑框 */}
+          <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-50 animate-in slide-in-from-top-4 fade-in duration-300">
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+              {/* 标题栏 */}
+              <div className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-banana-400 to-orange-400 rounded-full flex items-center justify-center shadow-md">
+                  <Edit2 size={20} className="text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    编辑大纲 - 第 {index + 1} 页
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    修改标题和要点内容
+                  </p>
+                </div>
+                <button
+                  onClick={handleCancel}
+                  className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-white/80 rounded-lg transition-colors"
+                >
+                  <span className="text-gray-400 text-2xl leading-none">×</span>
+                </button>
+              </div>
+              
+              {/* 编辑区域 */}
+              <div className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    标题
+                  </label>
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-banana-500 focus:border-transparent"
+                    placeholder="输入标题"
+                    autoFocus
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    要点（每行一个）
+                  </label>
+                  <textarea
+                    value={editPoints}
+                    onChange={(e) => setEditPoints(e.target.value)}
+                    rows={8}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-banana-500 focus:border-transparent resize-none"
+                    placeholder="输入要点，每行一个"
+                  />
+                </div>
+              </div>
+              
+              {/* 底部操作栏 */}
+              <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <div className="flex items-start gap-2 text-xs text-gray-500">
+                  <span className="flex-shrink-0 mt-0.5">💡</span>
+                  <span>按 Esc 取消编辑</span>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleCancel}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+                  >
+                    取消
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="px-4 py-2 text-sm font-medium bg-banana-500 text-black rounded-lg hover:bg-banana-600 transition-colors shadow-sm"
+                  >
+                    保存修改
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {ConfirmDialog}
-    </Card>
+    </>
   );
 };
 

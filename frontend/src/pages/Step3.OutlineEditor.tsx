@@ -14,7 +14,7 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -64,6 +64,7 @@ export const Step3OutlineEditor: React.FC = () => {
     deletePageById,
     addNewPage,
     generateOutline,
+    isGlobalLoading, // 添加 isGlobalLoading
   } = useProjectStore();
 
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
@@ -170,34 +171,69 @@ export const Step3OutlineEditor: React.FC = () => {
 
   const selectedPage = currentProject.pages.find((p) => p.id === selectedPageId);
 
-  // 定义操作按钮
-  const actionButtons: ActionButton[] = [
+  // 定义操作按钮（根据是否有页面显示不同的按钮）
+  const hasPages = currentProject.pages.length > 0;
+  
+  const actionButtons: ActionButton[] = hasPages ? [
     {
-      label: '添加页面',
-      icon: <Plus size={18} className="md:w-[20px] md:h-[20px]" />,
-      onClick: addNewPage,
-      variant: 'secondary',
-    },
-    {
-      label: currentProject.pages.length === 0
-        ? (currentProject.creation_type === 'outline' ? '解析大纲' : '自动生成大纲')
-        : (currentProject.creation_type === 'outline' ? '重新解析大纲' : '重新生成大纲'),
+      label: currentProject.creation_type === 'outline' ? '重新解析大纲' : '重新生成大纲',
       icon: <Sparkles size={18} className="md:w-[20px] md:h-[20px]" />,
       onClick: handleGenerateOutline,
       variant: 'secondary',
+      disabled: isGlobalLoading, // 生成中禁用
+      className: 'relative overflow-hidden group',
+      style: {
+        background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCF7F, #4D96FF, #9D4EDD, #FF6B6B)',
+        backgroundSize: '200% 100%',
+        animation: 'rainbow-flow 3s linear infinite',
+        color: 'white',
+        border: 'none',
+      },
     },
     {
-      label: '继续修改方案',
+      label: '深度优化大纲',
+      icon: <Sparkles size={18} className="md:w-[20px] md:h-[20px] animate-pulse" />,
       onClick: () => {}, // StepLayout 会自动处理展开 AI 输入框
       variant: 'primary',
-      isMainAction: true,
+      isMainAction: true, // 保持主要按钮样式
+      disabled: isGlobalLoading, // 生成中禁用
     },
     {
-      label: '导出大纲',
+      label: '手动添加大纲',
+      icon: <Plus size={18} className="md:w-[20px] md:h-[20px]" />,
+      onClick: addNewPage,
+      variant: 'secondary',
+      disabled: isGlobalLoading, // 生成中禁用
+    },
+    {
+      label: '导出大纲文案',
       icon: <Download size={18} className="md:w-[20px] md:h-[20px]" />,
       onClick: handleExportOutline,
       variant: 'secondary',
-      disabled: currentProject.pages.length === 0,
+      disabled: isGlobalLoading, // 生成中禁用
+    },
+  ] : [
+    {
+      label: currentProject.creation_type === 'outline' ? '解析大纲' : '自动生成大纲',
+      icon: <Sparkles size={18} className="md:w-[20px] md:h-[20px]" />,
+      onClick: handleGenerateOutline,
+      variant: 'secondary',
+      disabled: isGlobalLoading, // 生成中禁用
+      className: 'relative overflow-hidden group',
+      style: {
+        background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCF7F, #4D96FF, #9D4EDD, #FF6B6B)',
+        backgroundSize: '200% 100%',
+        animation: 'rainbow-flow 3s linear infinite',
+        color: 'white',
+        border: 'none',
+      },
+    },
+    {
+      label: '手动添加大纲',
+      icon: <Plus size={18} className="md:w-[20px] md:h-[20px]" />,
+      onClick: addNewPage,
+      variant: 'secondary',
+      disabled: isGlobalLoading, // 生成中禁用
     },
   ];
 
@@ -208,11 +244,6 @@ export const Step3OutlineEditor: React.FC = () => {
         projectId={projectId || null}
         pageTitle="编辑大纲"
         actionButtons={actionButtons}
-        progressInfo={{
-          current: currentProject.pages.length,
-          total: 0,
-          label: '个页面',
-        }}
         aiRefine={{
           placeholder: '例如：增加一页关于XXX的内容、删除第3页、合并前两页、调整第2页的标题...',
           onSubmit: handleAiRefineOutline,
@@ -261,22 +292,70 @@ export const Step3OutlineEditor: React.FC = () => {
             navigate(`/project/${projectId}/detail`);
           },
           loadingNext: isNavigating,
+          disableNext: !hasPages, // 没有页面时禁用下一步
         }}
-        isLoading={isNavigating}
-        loadingMessage="正在跳转到详情编辑..."
+        isLoading={isNavigating || isGlobalLoading} // 导航或生成大纲时显示 loading
+        loadingMessage={isNavigating ? "正在跳转到详情编辑..." : "正在生成大纲..."}
       >
-        {/* 主内容区 */}
-        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-          {/* 左侧：大纲列表 */}
-          <div className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0">
-            <div className="max-w-4xl mx-auto">
-              {/* 项目资源列表（文件和图片） */}
-              <ProjectResourcesList
-                projectId={projectId || null}
-                onFileClick={setPreviewFileId}
-                showFiles={true}
-                showImages={true}
-              />
+        {/* 主内容区 - 三栏等高布局 */}
+        <div className="flex-1 flex flex-row min-h-0 pb-20 md:pb-24">
+          {/* 左侧：统计信息 */}
+          <div className="hidden md:flex md:flex-col w-64 bg-white border-r border-gray-100 flex-shrink-0">
+            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide min-h-0">
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">统计信息</h3>
+              
+              {/* 页面数量统计 */}
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl shadow-sm p-5 mb-4 border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-600">大纲页面</span>
+                  <FileText size={18} className="text-banana-600" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {currentProject.pages.length}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">个页面</div>
+              </div>
+
+              {/* 项目资源列表 */}
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">项目资源</h4>
+                <ProjectResourcesList
+                  projectId={projectId || null}
+                  onFileClick={setPreviewFileId}
+                  showFiles={true}
+                  showImages={true}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 中间：主要内容区域 */}
+          <div className="flex-1 p-3 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
+            <div className="w-full h-full">
+              {/* 移动端统计信息 */}
+              <div className="md:hidden mb-4">
+                <div className="bg-gradient-to-br from-banana-50 to-orange-50 rounded-xl shadow-sm p-4 border border-banana-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">大纲页面</div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {currentProject.pages.length} <span className="text-sm font-normal text-gray-600">个页面</span>
+                      </div>
+                    </div>
+                    <FileText size={32} className="text-banana-600" />
+                  </div>
+                </div>
+              </div>
+
+              {/* 移动端项目资源 */}
+              <div className="md:hidden mb-4">
+                <ProjectResourcesList
+                  projectId={projectId || null}
+                  onFileClick={setPreviewFileId}
+                  showFiles={true}
+                  showImages={true}
+                />
+              </div>
 
               {/* 大纲卡片列表 */}
               {currentProject.pages.length === 0 ? (
@@ -286,8 +365,45 @@ export const Step3OutlineEditor: React.FC = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">还没有页面</h3>
                   <p className="text-gray-500 mb-6">
-                    点击"添加页面"手动创建，或"自动生成大纲"让 AI 帮你完成
+                    点击"手动添加大纲"手动创建，或"自动生成大纲"让 AI 帮你完成
                   </p>
+                  
+                  {/* 空状态按钮 */}
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={handleGenerateOutline}
+                      disabled={isGlobalLoading}
+                      className="relative overflow-hidden px-6 py-3 rounded-lg font-medium text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      style={{
+                        background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCF7F, #4D96FF, #9D4EDD, #FF6B6B)',
+                        backgroundSize: '200% 100%',
+                        animation: isGlobalLoading ? 'none' : 'rainbow-flow 3s linear infinite',
+                      }}
+                    >
+                      <span className="flex items-center gap-2">
+                        {isGlobalLoading ? (
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        ) : (
+                          <Sparkles size={20} />
+                        )}
+                        {isGlobalLoading ? '生成中...' : (currentProject.creation_type === 'outline' ? '解析大纲' : '自动生成大纲')}
+                      </span>
+                    </button>
+                    
+                    <button
+                      onClick={addNewPage}
+                      disabled={isGlobalLoading}
+                      className="px-6 py-3 rounded-lg font-medium text-gray-700 bg-white border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Plus size={20} />
+                        手动添加大纲
+                      </span>
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <DndContext
@@ -297,9 +413,10 @@ export const Step3OutlineEditor: React.FC = () => {
                 >
                   <SortableContext
                     items={currentProject.pages.map((p, idx) => p.id || `page-${idx}`)}
-                    strategy={verticalListSortingStrategy}
+                    strategy={rectSortingStrategy}
                   >
-                    <div className="space-y-4">
+                    {/* 响应式网格布局 */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 auto-rows-fr">
                       {currentProject.pages.map((page, index) => (
                         <SortableCard
                           key={page.id || `page-${index}`}
@@ -320,8 +437,9 @@ export const Step3OutlineEditor: React.FC = () => {
           </div>
 
           {/* 右侧：预览 */}
-          <div className="hidden md:block w-96 bg-white border-l border-gray-200 p-4 md:p-6 overflow-y-auto flex-shrink-0">
-            <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">预览</h3>
+          <div className="hidden md:flex md:flex-col w-80 bg-white border-l border-gray-100 flex-shrink-0">
+            <div className="flex-1 p-4 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">大纲预览</h3>
 
             {selectedPage ? (
               <div className="space-y-3 md:space-y-4">
@@ -346,9 +464,10 @@ export const Step3OutlineEditor: React.FC = () => {
             ) : (
               <div className="text-center py-8 md:py-10 text-gray-400">
                 <div className="text-3xl md:text-4xl mb-2">👆</div>
-                <p className="text-sm md:text-base">点击左侧卡片查看详情</p>
+                <p className="text-sm md:text-base">点击中间卡片查看详情</p>
               </div>
             )}
+            </div>
           </div>
 
           {/* 移动端预览：底部抽屉 */}
