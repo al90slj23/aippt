@@ -3,23 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, Save, Eye, EyeOff, Settings as SettingsIcon, Palette } from 'lucide-react';
 import { Button, Input, Textarea, Toast } from '../components/shared';
 import { apiClient } from '../api/client';
+import { Settings } from './Settings';
 
 interface BrandSettings {
   brand_name: string;
   brand_slogan: string;
   brand_description: string;
-}
-
-interface SystemSettings {
-  ai_provider_format: 'openai' | 'gemini';
-  api_base_url: string;
-  api_key: string;
-  text_model: string;
-  image_model: string;
-  image_resolution: string;
-  image_aspect_ratio: string;
-  max_description_workers: number;
-  max_image_workers: number;
 }
 
 type TabType = 'brand' | 'system';
@@ -39,19 +28,6 @@ export default function Admin() {
     brand_description: '',
   });
   
-  // 系统设置
-  const [systemSettings, setSystemSettings] = useState<SystemSettings>({
-    ai_provider_format: 'gemini',
-    api_base_url: '',
-    api_key: '',
-    text_model: '',
-    image_model: '',
-    image_resolution: '2K',
-    image_aspect_ratio: '16:9',
-    max_description_workers: 5,
-    max_image_workers: 8,
-  });
-  
   const [newPassword, setNewPassword] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -59,8 +35,6 @@ export default function Admin() {
   useEffect(() => {
     // 加载当前品牌配置
     loadBrandSettings();
-    // 加载系统设置
-    loadSystemSettings();
   }, []);
 
   const loadBrandSettings = async () => {
@@ -69,26 +43,6 @@ export default function Admin() {
       setBrandSettings(response.data.data);
     } catch (error) {
       console.error('Failed to load brand settings:', error);
-    }
-  };
-
-  const loadSystemSettings = async () => {
-    try {
-      const response = await apiClient.get('/api/settings');
-      const data = response.data.data;
-      setSystemSettings({
-        ai_provider_format: data.ai_provider_format || 'gemini',
-        api_base_url: data.api_base_url || '',
-        api_key: '', // 不显示实际密钥
-        text_model: data.text_model || '',
-        image_model: data.image_model || '',
-        image_resolution: data.image_resolution || '2K',
-        image_aspect_ratio: data.image_aspect_ratio || '16:9',
-        max_description_workers: data.max_description_workers || 5,
-        max_image_workers: data.max_image_workers || 8,
-      });
-    } catch (error) {
-      console.error('Failed to load system settings:', error);
     }
   };
 
@@ -142,34 +96,6 @@ export default function Admin() {
       }, 1000);
     } catch (error: any) {
       console.error('Failed to save brand settings:', error);
-      const message = error.response?.data?.message || '保存失败';
-      setToast({ message, type: 'error' });
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleSaveSystem = async () => {
-    setIsSaving(true);
-
-    try {
-      const payload: any = { ...systemSettings };
-      
-      // 如果 API Key 为空，不发送（保持原值）
-      if (!payload.api_key) {
-        delete payload.api_key;
-      }
-
-      await apiClient.put('/api/settings', payload);
-      setToast({ message: '系统设置保存成功', type: 'success' });
-      
-      // 清空密钥输入框
-      setSystemSettings(prev => ({ ...prev, api_key: '' }));
-      
-      // 重新加载设置
-      await loadSystemSettings();
-    } catch (error: any) {
-      console.error('Failed to save system settings:', error);
       const message = error.response?.data?.message || '保存失败';
       setToast({ message, type: 'error' });
     } finally {
@@ -381,189 +307,7 @@ export default function Admin() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">AI 服务配置</h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        AI 提供商格式
-                      </label>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => setSystemSettings({ ...systemSettings, ai_provider_format: 'gemini' })}
-                          className={`flex-1 px-4 py-2 rounded-lg border-2 transition-colors ${
-                            systemSettings.ai_provider_format === 'gemini'
-                              ? 'border-banana-500 bg-banana-50 text-banana-700'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          Gemini 格式
-                        </button>
-                        <button
-                          onClick={() => setSystemSettings({ ...systemSettings, ai_provider_format: 'openai' })}
-                          className={`flex-1 px-4 py-2 rounded-lg border-2 transition-colors ${
-                            systemSettings.ai_provider_format === 'openai'
-                              ? 'border-banana-500 bg-banana-50 text-banana-700'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          OpenAI 格式
-                        </button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        API Base URL
-                      </label>
-                      <Input
-                        value={systemSettings.api_base_url}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, api_base_url: e.target.value })
-                        }
-                        placeholder="https://api.example.com"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        API Key
-                      </label>
-                      <Input
-                        type="password"
-                        value={systemSettings.api_key}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, api_key: e.target.value })
-                        }
-                        placeholder="留空则保持当前设置不变"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        文本模型
-                      </label>
-                      <Input
-                        value={systemSettings.text_model}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, text_model: e.target.value })
-                        }
-                        placeholder="例如：gemini-3-flash-preview"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        图像模型
-                      </label>
-                      <Input
-                        value={systemSettings.image_model}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, image_model: e.target.value })
-                        }
-                        placeholder="例如：gemini-3-pro-image-preview"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">图像生成配置</h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        图像分辨率
-                      </label>
-                      <div className="flex gap-2">
-                        {['1K', '2K', '4K'].map((res) => (
-                          <button
-                            key={res}
-                            onClick={() => setSystemSettings({ ...systemSettings, image_resolution: res })}
-                            className={`flex-1 px-4 py-2 rounded-lg border-2 transition-colors ${
-                              systemSettings.image_resolution === res
-                                ? 'border-banana-500 bg-banana-50 text-banana-700'
-                                : 'border-gray-200 hover:border-gray-300'
-                            }`}
-                          >
-                            {res}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        图像宽高比
-                      </label>
-                      <Input
-                        value={systemSettings.image_aspect_ratio}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, image_aspect_ratio: e.target.value })
-                        }
-                        placeholder="16:9"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">并发配置</h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        描述生成并发数 (1-20)
-                      </label>
-                      <Input
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={systemSettings.max_description_workers}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, max_description_workers: parseInt(e.target.value) || 5 })
-                        }
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        图像生成并发数 (1-20)
-                      </label>
-                      <Input
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={systemSettings.max_image_workers}
-                        onChange={(e) =>
-                          setSystemSettings({ ...systemSettings, max_image_workers: parseInt(e.target.value) || 8 })
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 pt-4">
-                  <Button
-                    variant="primary"
-                    onClick={handleSaveSystem}
-                    disabled={isSaving}
-                    className="flex-1"
-                  >
-                    <Save size={18} className="mr-2" />
-                    {isSaving ? '保存中...' : '保存系统设置'}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => navigate('/')}
-                    className="flex-1"
-                  >
-                    返回首页
-                  </Button>
-                </div>
-              </div>
+              <Settings />
             )}
           </div>
         </div>
