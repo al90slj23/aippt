@@ -21,3 +21,6 @@
 19:08:00 [vite] page reload index.html
 20:08:30 [vite] page reload public/logo-preview.html
 20:08:45 [vite] page reload public/logo-preview.html
+20:25:28 [vite] page reload index.html
+20:27:58 [vite] hmr update /src/pages/Step3.OutlineEditor.tsx, /src/index.css
+20:28:34 [vite] hmr update /src/pages/Step5.SlidePreview.tsx, /src/index.css

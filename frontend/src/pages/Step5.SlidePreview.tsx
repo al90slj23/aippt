@@ -1068,7 +1068,7 @@ export const Step5SlidePreview: React.FC = () => {
       </header>
 
       {/* 主内容区 */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-w-0 min-h-0 pb-20">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-w-0 min-h-0 pb-24 md:pb-28">
         {/* 左侧：缩略图列表 */}
         <aside className="w-full md:w-80 bg-white border-b md:border-b-0 md:border-r border-gray-200 flex flex-col flex-shrink-0">
           <div className="p-3 md:p-4 border-b border-gray-200 flex-shrink-0 space-y-2 md:space-y-3">

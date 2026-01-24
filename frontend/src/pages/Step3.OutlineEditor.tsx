@@ -261,7 +261,7 @@ export const Step3OutlineEditor: React.FC = () => {
       </div>
 
       {/* 主内容区 */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden pb-20">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden pb-24 md:pb-28">
         {/* 左侧：大纲列表 */}
         <div className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0">
           <div className="max-w-4xl mx-auto">
