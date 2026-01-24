@@ -129,7 +129,7 @@ cd ..
 
 # 重启后端服务
 echo "→ 重启后端服务..."
-supervisorctl restart banana-slides
+/www/server/panel/pyenv/bin/supervisorctl -c /www/server/panel/plugin/supervisor/sample.conf restart yuanyu-ppt-backend:yuanyu-ppt-backend_00
 if [ $? -eq 0 ]; then
     echo "OK:backend:restart"
 else
