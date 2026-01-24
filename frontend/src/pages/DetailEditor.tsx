@@ -180,25 +180,7 @@ export const DetailEditor: React.FC = () => {
           
           {/* 右侧：操作按钮 */}
           <div className="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
-            <Button
-              variant="secondary"
-              size="sm"
-              icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => navigate(`/project/${projectId}/outline`)}
-              className="hidden md:inline-flex"
-            >
-              <span className="hidden lg:inline">上一步</span>
-            </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => navigate(`/project/${projectId}/preview`)}
-              disabled={!hasAllDescriptions}
-              className="text-xs md:text-sm"
-            >
-              <span className="hidden sm:inline">生成图片</span>
-            </Button>
+            {/* 顶部导航栏保持简洁，主要操作按钮移到底部 */}
           </div>
         </div>
         
@@ -245,7 +227,7 @@ export const DetailEditor: React.FC = () => {
       </div>
 
       {/* 主内容区 */}
-      <main className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0">
+      <main className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0 pb-24">
         <div className="max-w-7xl mx-auto">
           {/* 项目资源列表（文件和图片） */}
           <ProjectResourcesList
@@ -292,6 +274,39 @@ export const DetailEditor: React.FC = () => {
           )}
         </div>
       </main>
+      
+      {/* 底部固定导航栏 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：上一步按钮 */}
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            onClick={() => {
+              if (fromHistory) {
+                navigate('/history');
+              } else {
+                navigate(`/project/${projectId}/outline`);
+              }
+            }}
+          >
+            上一步
+          </Button>
+          
+          {/* 右侧：下一步按钮 */}
+          <Button
+            variant="primary"
+            size="sm"
+            icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
+            onClick={() => navigate(`/project/${projectId}/preview`)}
+            disabled={!hasAllDescriptions}
+          >
+            下一步
+          </Button>
+        </div>
+      </div>
+      
       <ToastContainer />
       {ConfirmDialog}
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />

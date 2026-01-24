@@ -214,24 +214,7 @@ export const OutlineEditor: React.FC = () => {
           
           {/* 右侧：操作按钮 */}
           <div className="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
-            <Button 
-              variant="secondary" 
-              size="sm" 
-              icon={<Save size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={async () => await saveAllPages()}
-              className="hidden md:inline-flex"
-            >
-              <span className="hidden lg:inline">保存</span>
-            </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
-              onClick={() => navigate(`/project/${projectId}/detail`)}
-              className="text-xs md:text-sm"
-            >
-              <span className="hidden sm:inline">下一步</span>
-            </Button>
+            {/* 顶部导航栏保持简洁，主要操作按钮移到底部 */}
           </div>
         </div>
         
@@ -273,7 +256,7 @@ export const OutlineEditor: React.FC = () => {
       </div>
 
       {/* 主内容区 */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden pb-20">
         {/* 左侧：大纲列表 */}
         <div className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0">
           <div className="max-w-4xl mx-auto">
@@ -434,6 +417,48 @@ export const OutlineEditor: React.FC = () => {
           </div>
         )}
       </div>
+      
+      {/* 底部固定导航栏 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：上一步按钮 */}
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            onClick={() => {
+              if (fromHistory) {
+                navigate('/history');
+              } else {
+                navigate('/');
+              }
+            }}
+          >
+            上一步
+          </Button>
+          
+          {/* 右侧：保存和下一步按钮 */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              icon={<Save size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={async () => await saveAllPages()}
+            >
+              保存
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              icon={<ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => navigate(`/project/${projectId}/detail`)}
+            >
+              下一步
+            </Button>
+          </div>
+        </div>
+      </div>
+      
       {ConfirmDialog}
       <ToastContainer />
       

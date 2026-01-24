@@ -1124,7 +1124,7 @@ export const SlidePreview: React.FC = () => {
       </header>
 
       {/* 主内容区 */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-w-0 min-h-0">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-w-0 min-h-0 pb-20">
         {/* 左侧：缩略图列表 */}
         <aside className="w-full md:w-80 bg-white border-b md:border-b-0 md:border-r border-gray-200 flex flex-col flex-shrink-0">
           <div className="p-3 md:p-4 border-b border-gray-200 flex-shrink-0 space-y-2 md:space-y-3">
@@ -1826,6 +1826,72 @@ export const SlidePreview: React.FC = () => {
           />
         </>
       )}
+      
+      {/* 底部固定导航栏 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          {/* 左侧：上一步按钮 */}
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<ArrowLeft size={16} className="md:w-[18px] md:h-[18px]" />}
+            onClick={() => {
+              if (fromHistory) {
+                navigate('/history');
+              } else {
+                navigate(`/project/${projectId}/detail`);
+              }
+            }}
+          >
+            上一步
+          </Button>
+          
+          {/* 右侧：导出按钮 */}
+          <div className="relative">
+            <Button
+              variant="primary"
+              size="sm"
+              icon={<Download size={16} className="md:w-[18px] md:h-[18px]" />}
+              onClick={() => {
+                setShowExportMenu(!showExportMenu);
+                setShowExportTasksPanel(false);
+              }}
+              disabled={isMultiSelectMode ? selectedPageIds.size === 0 : !hasAllImages}
+            >
+              {isMultiSelectMode && selectedPageIds.size > 0 
+                ? `导出 (${selectedPageIds.size})` 
+                : '导出'}
+            </Button>
+            {showExportMenu && (
+              <div className="absolute right-0 bottom-full mb-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
+                {isMultiSelectMode && selectedPageIds.size > 0 && (
+                  <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-100">
+                    将导出选中的 {selectedPageIds.size} 页
+                  </div>
+                )}
+                <button
+                  onClick={() => handleExport('pptx')}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+                >
+                  导出为 PPTX
+                </button>
+                <button
+                  onClick={() => handleExport('editable-pptx')}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+                >
+                  导出可编辑 PPTX（Beta）
+                </button>
+                <button
+                  onClick={() => handleExport('pdf')}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+                >
+                  导出为 PDF
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       
     </div>
   );
