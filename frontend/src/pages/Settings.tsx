@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Key, Image, Zap, Save, RotateCcw, Globe, FileText, Brain } from 'lucide-react';
+import { Home, Key, Image, Zap, Save, RotateCcw, Globe, FileText, Brain, Eye, EyeOff } from 'lucide-react';
 import { Button, Input, Card, Loading, useToast, useConfirm } from '@/components/shared';
 import * as api from '@/api/endpoints';
 import type { OutputLanguage } from '@/api/endpoints';
@@ -262,6 +262,8 @@ export const Settings: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [serviceTestStates, setServiceTestStates] = useState<Record<string, ServiceTestState>>({});
+  // 敏感字段的显示/隐藏状态
+  const [sensitiveFieldsVisible, setSensitiveFieldsVisible] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     loadSettings();
@@ -276,7 +278,7 @@ export const Settings: React.FC = () => {
         setFormData({
           ai_provider_format: response.data.ai_provider_format || 'gemini',
           api_base_url: response.data.api_base_url || '',
-          api_key: '',
+          api_key: '',  // 保持为空，显示时从 settings 读取
           image_resolution: response.data.image_resolution || '2K',
           image_aspect_ratio: response.data.image_aspect_ratio || '16:9',
           max_description_workers: response.data.max_description_workers || 5,
@@ -284,14 +286,14 @@ export const Settings: React.FC = () => {
           text_model: response.data.text_model || '',
           image_model: response.data.image_model || '',
           mineru_api_base: response.data.mineru_api_base || '',
-          mineru_token: '',
+          mineru_token: '',  // 保持为空，显示时从 settings 读取
           image_caption_model: response.data.image_caption_model || '',
           output_language: response.data.output_language || 'zh',
           enable_text_reasoning: response.data.enable_text_reasoning || false,
           text_thinking_budget: response.data.text_thinking_budget || 1024,
           enable_image_reasoning: response.data.enable_image_reasoning || false,
           image_thinking_budget: response.data.image_thinking_budget || 1024,
-          baidu_ocr_api_key: '',
+          baidu_ocr_api_key: '',  // 保持为空，显示时从 settings 读取
         });
       }
     } catch (error: any) {
@@ -573,14 +575,22 @@ export const Settings: React.FC = () => {
     }
 
     // text, password, number 类型
-    // 对于敏感字段，如果有遮蔽值则显示，否则显示长度
+    // 对于敏感字段，显示遮蔽值或完整值（根据眼睛图标状态）
+    const isVisible = sensitiveFieldsVisible[field.key] || false;
+    let displayValue = value as string | number;
     let placeholder = field.placeholder || '';
-    if (field.sensitiveField && settings) {
+    
+    // 如果是敏感字段且输入框为空，显示遮蔽后的值
+    if (field.sensitiveField && settings && !value) {
       const maskedKey = `${field.key}_masked` as keyof SettingsType;
-      if (settings[maskedKey]) {
-        placeholder = `当前值: ${settings[maskedKey]}`;
-      } else if (field.lengthKey && settings[field.lengthKey]) {
-        placeholder = `已设置（长度: ${settings[field.lengthKey]}）`;
+      const fullKey = field.key as keyof SettingsType;
+      
+      if (isVisible && settings[fullKey]) {
+        // 显示完整值
+        displayValue = settings[fullKey] as string;
+      } else if (settings[maskedKey]) {
+        // 显示遮蔽值
+        displayValue = settings[maskedKey] as string;
       }
     }
 
@@ -594,21 +604,36 @@ export const Settings: React.FC = () => {
 
     return (
       <div key={field.key} className={isDisabled ? 'opacity-50' : ''}>
-        <Input
-          label={field.label}
-          type={field.type === 'number' ? 'number' : field.type}
-          placeholder={placeholder}
-          value={value as string | number}
-          onChange={(e) => {
-            const newValue = field.type === 'number' 
-              ? parseInt(e.target.value) || (field.min ?? 0)
-              : e.target.value;
-            handleFieldChange(field.key, newValue);
-          }}
-          min={field.min}
-          max={field.max}
-          disabled={isDisabled}
-        />
+        <div className="relative">
+          <Input
+            label={field.label}
+            type={field.type === 'number' ? 'number' : (field.sensitiveField && !isVisible ? 'password' : 'text')}
+            placeholder={placeholder}
+            value={displayValue}
+            onChange={(e) => {
+              const newValue = field.type === 'number' 
+                ? parseInt(e.target.value) || (field.min ?? 0)
+                : e.target.value;
+              handleFieldChange(field.key, newValue);
+            }}
+            min={field.min}
+            max={field.max}
+            disabled={isDisabled}
+          />
+          {field.sensitiveField && settings && (
+            <button
+              type="button"
+              onClick={() => setSensitiveFieldsVisible(prev => ({
+                ...prev,
+                [field.key]: !prev[field.key]
+              }))}
+              className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 transition-colors"
+              title={isVisible ? '隐藏' : '显示'}
+            >
+              {isVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          )}
+        </div>
         {field.description && (
           <p className="mt-1 text-sm text-gray-500">{field.description}</p>
         )}

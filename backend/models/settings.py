@@ -52,6 +52,7 @@ class Settings(db.Model):
             'id': self.id,
             'ai_provider_format': self.ai_provider_format,
             'api_base_url': self.api_base_url,
+            'api_key': self.api_key,  # 返回完整值，由前端控制显示
             'api_key_length': len(self.api_key) if self.api_key else 0,
             'api_key_masked': self._mask_sensitive_value(self.api_key) if self.api_key else None,
             'image_resolution': self.image_resolution,
@@ -61,6 +62,7 @@ class Settings(db.Model):
             'text_model': self.text_model,
             'image_model': self.image_model,
             'mineru_api_base': self.mineru_api_base,
+            'mineru_token': self.mineru_token,  # 返回完整值，由前端控制显示
             'mineru_token_length': len(self.mineru_token) if self.mineru_token else 0,
             'mineru_token_masked': self._mask_sensitive_value(self.mineru_token) if self.mineru_token else None,
             'image_caption_model': self.image_caption_model,
@@ -69,6 +71,7 @@ class Settings(db.Model):
             'text_thinking_budget': self.text_thinking_budget,
             'enable_image_reasoning': self.enable_image_reasoning,
             'image_thinking_budget': self.image_thinking_budget,
+            'baidu_ocr_api_key': self.baidu_ocr_api_key,  # 返回完整值，由前端控制显示
             'baidu_ocr_api_key_length': len(self.baidu_ocr_api_key) if self.baidu_ocr_api_key else 0,
             'baidu_ocr_api_key_masked': self._mask_sensitive_value(self.baidu_ocr_api_key) if self.baidu_ocr_api_key else None,
             'brand_name': self.brand_name,

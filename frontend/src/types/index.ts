@@ -122,6 +122,7 @@ export interface Settings {
   id: number;
   ai_provider_format: 'openai' | 'gemini';
   api_base_url?: string;
+  api_key?: string;  // 完整的 API Key
   api_key_length: number;
   api_key_masked?: string;  // 遮蔽后的 API Key
   image_resolution: string;
@@ -131,6 +132,7 @@ export interface Settings {
   text_model?: string;
   image_model?: string;
   mineru_api_base?: string;
+  mineru_token?: string;  // 完整的 MinerU Token
   mineru_token_length: number;
   mineru_token_masked?: string;  // 遮蔽后的 MinerU Token
   image_caption_model?: string;
@@ -140,6 +142,7 @@ export interface Settings {
   text_thinking_budget: number;
   enable_image_reasoning: boolean;
   image_thinking_budget: number;
+  baidu_ocr_api_key?: string;  // 完整的百度 OCR API Key
   baidu_ocr_api_key_length: number;
   baidu_ocr_api_key_masked?: string;  // 遮蔽后的百度 OCR API Key
   created_at?: string;
