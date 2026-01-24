@@ -232,7 +232,7 @@ export const Step4DetailEditor: React.FC = () => {
       </div>
 
       {/* 主内容区 */}
-      <main className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0 pb-24">
+      <main className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0 pb-28 md:pb-32">
         <div className="max-w-7xl mx-auto">
           {/* 项目资源列表（文件和图片） */}
           <ProjectResourcesList

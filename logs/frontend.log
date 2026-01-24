@@ -24,3 +24,8 @@
 20:25:28 [vite] page reload index.html
 20:27:58 [vite] hmr update /src/pages/Step3.OutlineEditor.tsx, /src/index.css
 20:28:34 [vite] hmr update /src/pages/Step5.SlidePreview.tsx, /src/index.css
+20:32:04 [vite] hmr update /src/pages/Step4.DetailEditor.tsx, /src/index.css
+20:32:12 [vite] hmr update /src/pages/Step1.FillContent.tsx, /src/index.css
+20:32:13 [vite] hmr update /src/pages/Step2.SelectTemplate.tsx, /src/index.css
+20:32:15 [vite] hmr update /src/pages/Step3.OutlineEditor.tsx, /src/index.css
+20:32:15 [vite] hmr update /src/pages/Step5.SlidePreview.tsx, /src/index.css

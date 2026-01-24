@@ -235,7 +235,7 @@ export const Step1FillContent: React.FC = () => {
       <ProgressSteps currentStep={1} projectId={null} />
 
       {/* 主内容区 */}
-      <main className="flex-1 p-3 md:p-6 overflow-y-auto pb-24">
+      <main className="flex-1 p-3 md:p-6 overflow-y-auto pb-28 md:pb-32">
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
             <div>
