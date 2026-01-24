@@ -1,245 +1,187 @@
-# Banana Slides 部署指南
+# 部署指南
 
-## 服务器信息
-- 服务器IP: 43.139.241.25
-- 域名: ppt.yysyyf.com
-- 项目目录: /www/wwwroot/ppt.yysyyf.com
-- 数据库: SQLite (自动创建在 backend/instance/database.db)
+## 快速开始
 
-## 部署步骤
-
-### 1. 推送代码到 GitHub
+### 本地开发
 
 ```bash
-cd banana-slides
-
-# 移除原有的 git remote（如果存在）
-git remote remove origin
-
-# 添加新的 GitHub 仓库
-git remote add origin git@github.com:al90slj23/aippt.git
-
-# 推送代码
-git push -u origin main
+./go.sh 0
 ```
 
-### 2. 服务器环境准备
+这将启动：
+- 后端服务器：http://localhost:5000
+- 前端开发服务器：http://localhost:5173
 
-SSH 连接到服务器：
-```bash
-ssh ppt.yysyyf.com
-```
+日志文件：
+- `logs/backend.log`
+- `logs/frontend.log`
 
-安装必要软件：
-```bash
-# 更新系统
-sudo apt update && sudo apt upgrade -y
+停止服务：按回车键或 `kill $(cat logs/backend.pid) $(cat logs/frontend.pid)`
 
-# 安装 Docker 和 Docker Compose
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER
-
-# 安装 Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# 安装 Git
-sudo apt install git -y
-
-# 安装 Nginx（如果还没有）
-sudo apt install nginx -y
-```
-
-### 3. 克隆项目到服务器
+### 部署到服务器
 
 ```bash
-# 创建项目目录
-sudo mkdir -p /www/wwwroot/ppt.yysyyf.com
-sudo chown -R $USER:$USER /www/wwwroot/ppt.yysyyf.com
-
-# 克隆项目
-cd /www/wwwroot
-git clone git@github.com:al90slj23/aippt.git ppt.yysyyf.com
-cd ppt.yysyyf.com
+./go.sh 1
 ```
 
-### 4. 配置环境变量
+这将执行以下操作：
 
-```bash
-# 复制环境变量模板
-cp .env.example .env
+1. **前端构建**
+   - 运行 `npm run build`
+   - 生成生产环境文件到 `frontend/dist`
 
-# 编辑环境变量
-nano .env
+2. **GitHub 推送**
+   - 提交代码到 Git
+   - 推送到 GitHub 仓库
+
+3. **rsync 同步**
+   - 将代码同步到服务器
+   - 排除 `.git`、`node_modules`、`__pycache__` 等
+
+4. **服务器操作**
+   - 更新 Python 依赖（uv sync）
+   - 运行数据库迁移（alembic upgrade head）
+   - 重启后端服务（supervisorctl restart）
+   - 设置文件权限
+
+## 服务器配置
+
+### SSH 配置
+
+确保 `~/.ssh/config` 中有以下配置：
+
+```
+Host ppt.yysyyf.com
+    HostName 43.139.241.25
+    User root
+    IdentityFile ~/.ssh/al90slj23
+    Port 22
 ```
 
-关键配置项：
-```env
-# AI Provider 配置
-AI_PROVIDER_FORMAT=gemini
-GOOGLE_API_KEY=your-api-key-here
-GOOGLE_API_BASE=https://generativelanguage.googleapis.com
+### 服务器要求
 
-# 模型配置
-TEXT_MODEL=gemini-3-flash-preview
-IMAGE_MODEL=gemini-3-pro-image-preview
+- Python 3.11+
+- uv（Python 包管理器）
+- Node.js 20+
+- Supervisor（进程管理）
+- Nginx（Web 服务器）
+- rsync（文件同步）
 
-# Flask 配置
-FLASK_ENV=production
-SECRET_KEY=生成一个随机密钥
-BACKEND_PORT=5000
+### Supervisor 配置
 
-# CORS 配置
-CORS_ORIGINS=https://ppt.yysyyf.com,http://ppt.yysyyf.com
+位置：`/etc/supervisor/conf.d/banana-slides.conf`
 
-# 数据库配置（使用 SQLite，无需额外配置）
-# 数据库文件会自动创建在 backend/instance/database.db
+```ini
+[program:banana-slides]
+command=/root/.local/bin/uv run gunicorn -w 4 -b 127.0.0.1:5000 app:app
+directory=/www/wwwroot/ppt.yysyyf.com/backend
+user=root
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/banana-slides.err.log
+stdout_logfile=/var/log/banana-slides.out.log
 ```
 
-### 5. 启动 Docker 容器
+### Nginx 配置
 
-```bash
-# 使用预构建镜像快速启动
-docker compose -f docker-compose.prod.yml up -d
+位置：`/www/server/panel/vhost/nginx/html_ppt.yysyyf.com.conf`
 
-# 或者从源码构建
-# docker compose up -d --build
+关键配置：
+- `root /www/wwwroot/ppt.yysyyf.com;`
+- `client_max_body_size 200M;`
+- API 反向代理到 `http://127.0.0.1:5000`
+- 静态文件服务（前端 dist 目录）
+- `/files/` 和 `/uploads/` 路径映射
 
-# 查看日志
-docker compose logs -f
+## 目录结构
+
 ```
-
-### 6. 配置 Nginx 反向代理
-
-创建 Nginx 配置文件：
-```bash
-sudo nano /etc/nginx/sites-available/ppt.yysyyf.com
-```
-
-添加以下内容：
-```nginx
-server {
-    listen 80;
-    server_name ppt.yysyyf.com;
-
-    # 前端
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    # 后端 API
-    location /api {
-        proxy_pass http://localhost:5000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # 增加超时时间（AI 生成可能需要较长时间）
-        proxy_connect_timeout 300s;
-        proxy_send_timeout 300s;
-        proxy_read_timeout 300s;
-    }
-
-    # 文件上传大小限制
-    client_max_body_size 200M;
-}
-```
-
-启用配置：
-```bash
-sudo ln -s /etc/nginx/sites-available/ppt.yysyyf.com /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-### 7. 配置 SSL 证书（推荐）
-
-```bash
-# 安装 Certbot
-sudo apt install certbot python3-certbot-nginx -y
-
-# 获取 SSL 证书
-sudo certbot --nginx -d ppt.yysyyf.com
-
-# 自动续期
-sudo certbot renew --dry-run
-```
-
-### 8. 设置开机自启动
-
-```bash
-# Docker 容器自动重启已在 docker-compose.yml 中配置
-# restart: unless-stopped
-
-# 确保 Docker 服务开机自启
-sudo systemctl enable docker
-```
-
-## 维护命令
-
-### 查看日志
-```bash
-cd /www/wwwroot/ppt.yysyyf.com
-docker compose logs -f --tail 100
-```
-
-### 重启服务
-```bash
-docker compose restart
-```
-
-### 更新代码
-```bash
-git pull
-docker compose down
-docker compose up -d --build
-```
-
-### 备份数据库
-```bash
-# SQLite 数据库备份
-cp backend/instance/database.db backend/instance/database.db.backup-$(date +%Y%m%d)
-
-# 备份上传文件
-tar -czf uploads-backup-$(date +%Y%m%d).tar.gz uploads/
+/www/wwwroot/ppt.yysyyf.com/
+├── backend/                 # 后端代码
+│   ├── instance/           # SQLite 数据库
+│   ├── uploads/            # 用户上传文件
+│   └── ...
+├── frontend/               # 前端源码
+│   ├── dist/              # 构建产物（Nginx 服务）
+│   └── ...
+└── ...
 ```
 
 ## 故障排查
 
-### 检查容器状态
+### 后端服务无法启动
+
 ```bash
-docker compose ps
+# 查看日志
+ssh ppt.yysyyf.com "tail -f /var/log/banana-slides.err.log"
+
+# 重启服务
+ssh ppt.yysyyf.com "supervisorctl restart banana-slides"
 ```
 
-### 检查端口占用
-```bash
-sudo netstat -tulpn | grep -E ':(3000|5000)'
+### 前端页面 404
+
+检查 Nginx 配置中的 `try_files` 指令：
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
 ```
 
-### 检查 Nginx 状态
-```bash
-sudo systemctl status nginx
-sudo nginx -t
+### 图片无法加载
+
+检查 Nginx 中的 `/files/` 路径配置：
+
+```nginx
+location ^~ /files/ {
+    alias /www/wwwroot/ppt.yysyyf.com/uploads/;
+}
 ```
 
-### 查看详细错误日志
-```bash
-# 后端日志
-docker compose logs backend --tail 200
+### 数据库迁移失败
 
-# 前端日志
-docker compose logs frontend --tail 200
+```bash
+# SSH 到服务器
+ssh ppt.yysyyf.com
+
+# 进入项目目录
+cd /www/wwwroot/ppt.yysyyf.com/backend
+
+# 手动运行迁移
+uv run alembic upgrade head
+```
+
+## 环境变量
+
+后端使用 `.env` 文件或数据库配置。主要配置项：
+
+- `AI_PROVIDER_FORMAT`: openai 或 gemini
+- `API_BASE_URL`: AI API 基础 URL
+- `API_KEY`: AI API 密钥
+- `MINERU_TOKEN`: MinerU 服务 Token
+- `BAIDU_OCR_API_KEY`: 百度 OCR API Key
+
+这些配置可以通过 Web 界面（/settings）进行修改。
+
+## 更新日志
+
+查看 Git 提交历史：
+
+```bash
+git log --oneline --graph --decorate
+```
+
+## 备份
+
+### 数据库备份
+
+```bash
+ssh ppt.yysyyf.com "cp /www/wwwroot/ppt.yysyyf.com/backend/instance/database.db /backup/database-$(date +%Y%m%d).db"
+```
+
+### 上传文件备份
+
+```bash
+rsync -avz ppt.yysyyf.com:/www/wwwroot/ppt.yysyyf.com/backend/uploads/ ./backup/uploads/
 ```

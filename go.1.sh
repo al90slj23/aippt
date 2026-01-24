@@ -20,8 +20,8 @@ echo ""
 # 先 git add
 git add .
 
-# 生成提交摘要并交互确认
-echo -e "${CYAN}🤖 正在生成提交摘要...${NC}"
+# 生成 AI 提交摘要并交互确认
+echo -e "${CYAN}🤖 正在生成 AI 提交摘要...${NC}"
 AI_COMMIT_MSG=$(get_ai_commit_message)
 COMMIT_MSG=$(confirm_commit_message "$AI_COMMIT_MSG")
 
