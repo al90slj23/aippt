@@ -28,7 +28,7 @@ call_ai_api() {
     local MODEL="deepseek-chat"
 
     # 使用 Python 调用 API
-    python3 -c "
+    local RESULT=$(python3 -c "
 import json
 import urllib.request
 import sys
@@ -58,11 +58,29 @@ req = urllib.request.Request(
 try:
     with urllib.request.urlopen(req, timeout=60) as response:
         result = json.loads(response.read().decode('utf-8'))
-        print(result['choices'][0]['message']['content'].strip())
+        content = result['choices'][0]['message']['content'].strip()
+        print(content)
+        sys.exit(0)
+except urllib.error.HTTPError as e:
+    print(f'HTTP错误 {e.code}: {e.reason}', file=sys.stderr)
+    sys.exit(1)
+except urllib.error.URLError as e:
+    print(f'网络错误: {e.reason}', file=sys.stderr)
+    sys.exit(1)
 except Exception as e:
     print(f'错误: {e}', file=sys.stderr)
     sys.exit(1)
-" 2>/dev/null
+" 2>&1)
+    
+    local EXIT_CODE=$?
+    
+    if [ $EXIT_CODE -eq 0 ]; then
+        echo "$RESULT"
+        return 0
+    else
+        echo "错误: $RESULT" >&2
+        return 1
+    fi
 }
 
 # 生成 Git 提交摘要
@@ -73,16 +91,26 @@ get_ai_commit_message() {
         return
     fi
 
-    # 获取变更信息
+    # 获取变更信息（优先使用已暂存的变更）
     local CHANGED_FILES=$(git diff --cached --name-status 2>/dev/null)
     if [ -z "$CHANGED_FILES" ]; then
         CHANGED_FILES=$(git diff --name-status 2>/dev/null)
+    fi
+
+    # 如果还是没有变更，使用 status
+    if [ -z "$CHANGED_FILES" ]; then
+        CHANGED_FILES=$(git status --short 2>/dev/null)
     fi
 
     local DIFF_STAT=$(git diff --cached --stat 2>/dev/null)
     if [ -z "$DIFF_STAT" ]; then
         DIFF_STAT=$(git diff --stat 2>/dev/null)
     fi
+
+    # 调试信息（输出到 stderr，不影响返回值）
+    echo "🔍 检测到变更文件:" >&2
+    echo "$CHANGED_FILES" | head -10 >&2
+    echo "" >&2
 
     # 构建 prompt
     local PROMPT="你是一个专业的Git提交摘要生成专家。请根据以下变更信息，生成一个详细的Conventional Commits格式提交摘要。
@@ -107,11 +135,15 @@ ${DIFF_STAT}
 
     local SYSTEM_PROMPT="你是一个专业的Git提交摘要生成专家。"
 
+    echo "🤖 正在调用 DeepSeek API..." >&2
     local RESULT=$(call_ai_api "$PROMPT" "$SYSTEM_PROMPT" 1200)
+    local API_STATUS=$?
     
-    if [ -n "$RESULT" ]; then
+    if [ $API_STATUS -eq 0 ] && [ -n "$RESULT" ] && [[ "$RESULT" != 错误* ]]; then
+        echo "✅ AI 生成成功" >&2
         echo "$RESULT"
     else
+        echo "⚠️  AI 生成失败，使用默认摘要" >&2
         echo "chore: 自动部署 $(date '+%Y-%m-%d %H:%M')"
     fi
 }
@@ -127,7 +159,7 @@ if [ "$_GO_AI_SOURCED" = false ]; then
         PROMPT=$(cat)
     else
         echo "用法: ./go.ai.sh \"你的问题\""
-        echo "环境变量: DEEPSEEK_API_KEY"
+        echo "环境变量: DEEPSEEK_API_KEY 或 APIKEY_MacOS_Code_DeepSeek"
         exit 0
     fi
 
