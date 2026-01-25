@@ -308,7 +308,7 @@ export const Step5SlidePreview: React.FC = () => {
   
   const actionButtons: ActionButton[] = [
     {
-      label: isGenerating ? '生成中...' : '批量生成图片',
+      label: isGenerating ? '生成中...' : (hasAllImages ? '重新批量图片' : '批量生成图片'),
       icon: isGenerating ? (
         <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

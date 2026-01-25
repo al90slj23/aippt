@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Plus, FileText, Sparkles, Download } from 'lucide-react';
 import {
@@ -42,6 +42,8 @@ const SortableCard: React.FC<{
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    width: '100%',
+    height: '100%',
   };
 
   return (
@@ -71,6 +73,9 @@ export const Step3OutlineEditor: React.FC = () => {
   const [isAiRefining, setIsAiRefining] = useState(false);
   const [previewFileId, setPreviewFileId] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false); // 新增：导航 loading 状态
+  const [maxCardWidth, setMaxCardWidth] = useState<number>(0);
+  const [maxCardHeight, setMaxCardHeight] = useState<number>(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { confirm, ConfirmDialog } = useConfirm();
   const { show, ToastContainer } = useToast();
 
@@ -80,6 +85,46 @@ export const Step3OutlineEditor: React.FC = () => {
       syncProject(projectId);
     }
   }, [projectId, currentProject, syncProject]);
+
+  // 计算最大卡片宽度和高度
+  useEffect(() => {
+    if (!currentProject?.pages.length) return;
+    
+    // 第一次渲染时，先重置尺寸让卡片自由扩展
+    setMaxCardWidth(0);
+    setMaxCardHeight(0);
+    
+    // 等待 DOM 渲染完成后计算
+    const timer = setTimeout(() => {
+      let maxWidth = 0;
+      let maxHeight = 0;
+      cardRefs.current.forEach(ref => {
+        if (ref) {
+          // 获取卡片的自然尺寸（包括溢出的内容）
+          const card = ref.querySelector('[class*="p-4"]');
+          if (card) {
+            // 使用 scrollWidth 和 scrollHeight 来获取完整内容的尺寸
+            const width = card.scrollWidth;
+            const height = card.scrollHeight;
+            if (width > maxWidth) {
+              maxWidth = width;
+            }
+            if (height > maxHeight) {
+              maxHeight = height;
+            }
+          }
+        }
+      });
+      if (maxWidth > 0) {
+        setMaxCardWidth(maxWidth);
+      }
+      if (maxHeight > 0) {
+        setMaxCardHeight(maxHeight);
+      }
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [currentProject?.pages, isAiRefining, currentProject?.pages.map(p => p.outline_content).join(',')]);
 
   // 拖拽传感器配置
   const sensors = useSensors(
@@ -168,8 +213,6 @@ export const Step3OutlineEditor: React.FC = () => {
       </div>
     );
   }
-
-  const selectedPage = currentProject.pages.find((p) => p.id === selectedPageId);
 
   // 定义操作按钮（根据是否有页面显示不同的按钮）
   const hasPages = currentProject.pages.length > 0;
@@ -297,38 +340,8 @@ export const Step3OutlineEditor: React.FC = () => {
         isLoading={isNavigating || isGlobalLoading} // 导航或生成大纲时显示 loading
         loadingMessage={isNavigating ? "正在跳转到详情编辑..." : "正在生成大纲..."}
       >
-        {/* 主内容区 - 三栏等高布局 */}
+        {/* 主内容区 - 两栏布局 */}
         <div className="flex-1 flex flex-row min-h-0 pb-20 md:pb-24">
-          {/* 左侧：统计信息 */}
-          <div className="hidden md:flex md:flex-col w-64 bg-white border-r border-gray-100 flex-shrink-0">
-            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide min-h-0">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">统计信息</h3>
-              
-              {/* 页面数量统计 */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl shadow-sm p-5 mb-4 border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-600">大纲页面</span>
-                  <FileText size={18} className="text-banana-600" />
-                </div>
-                <div className="text-3xl font-bold text-gray-900">
-                  {currentProject.pages.length}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">个页面</div>
-              </div>
-
-              {/* 项目资源列表 */}
-              <div className="mt-6">
-                <h4 className="text-sm font-semibold text-gray-700 mb-3">项目资源</h4>
-                <ProjectResourcesList
-                  projectId={projectId || null}
-                  onFileClick={setPreviewFileId}
-                  showFiles={true}
-                  showImages={true}
-                />
-              </div>
-            </div>
-          </div>
-
           {/* 中间：主要内容区域 */}
           <div className="flex-1 p-3 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
             <div className="w-full h-full">
@@ -415,19 +428,34 @@ export const Step3OutlineEditor: React.FC = () => {
                     items={currentProject.pages.map((p, idx) => p.id || `page-${idx}`)}
                     strategy={rectSortingStrategy}
                   >
-                    {/* 响应式网格布局 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 auto-rows-fr">
+                    {/* Grid 布局，居中对齐 */}
+                    <div 
+                      className="grid gap-4 justify-center"
+                      style={{
+                        gridTemplateColumns: maxCardWidth > 0 ? `repeat(auto-fit, ${maxCardWidth}px)` : 'repeat(auto-fit, minmax(200px, max-content))',
+                        gridAutoRows: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto'
+                      }}
+                    >
                       {currentProject.pages.map((page, index) => (
-                        <SortableCard
+                        <div
                           key={page.id || `page-${index}`}
-                          page={page}
-                          index={index}
-                          onUpdate={(data) => page.id && updatePageLocal(page.id, data)}
-                          onDelete={() => page.id && handleDeletePage(page.id)}
-                          onClick={() => setSelectedPageId(page.id || null)}
-                          isSelected={selectedPageId === page.id}
-                          isAiRefining={isAiRefining}
-                        />
+                          ref={el => cardRefs.current[index] = el}
+                          className="flex"
+                          style={{
+                            width: maxCardWidth > 0 ? `${maxCardWidth}px` : 'max-content',
+                            height: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto'
+                          }}
+                        >
+                          <SortableCard
+                            page={page}
+                            index={index}
+                            onUpdate={(data) => page.id && updatePageLocal(page.id, data)}
+                            onDelete={() => page.id && handleDeletePage(page.id)}
+                            onClick={() => setSelectedPageId(page.id || null)}
+                            isSelected={selectedPageId === page.id}
+                            isAiRefining={isAiRefining}
+                          />
+                        </div>
                       ))}
                     </div>
                   </SortableContext>
@@ -436,70 +464,40 @@ export const Step3OutlineEditor: React.FC = () => {
             </div>
           </div>
 
-          {/* 右侧：预览 */}
-          <div className="hidden md:flex md:flex-col w-80 bg-white border-l border-gray-100 flex-shrink-0">
-            <div className="flex-1 p-4 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
-              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">大纲预览</h3>
+          {/* 右侧：统计信息 */}
+          <div className="hidden md:flex md:flex-col w-64 bg-white border-l border-gray-100 flex-shrink-0">
+            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide min-h-0">
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">统计信息</h3>
+              
+              {/* 页面数量统计 */}
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl shadow-sm p-5 mb-4 border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-600">大纲页面</span>
+                  <FileText size={18} className="text-banana-600" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {currentProject.pages.length}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">个页面</div>
+              </div>
 
-            {selectedPage ? (
-              <div className="space-y-3 md:space-y-4">
-                <div>
-                  <div className="text-xs md:text-sm text-gray-500 mb-1">标题</div>
-                  <div className="text-base md:text-lg font-semibold text-gray-900">
-                    {selectedPage.outline_content.title}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs md:text-sm text-gray-500 mb-2">要点</div>
-                  <ul className="space-y-1.5 md:space-y-2">
-                    {selectedPage.outline_content.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start text-sm md:text-base text-gray-700">
-                        <span className="mr-2 text-banana-500 flex-shrink-0">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* 项目资源列表 */}
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">项目资源</h4>
+                <ProjectResourcesList
+                  projectId={projectId || null}
+                  onFileClick={setPreviewFileId}
+                  showFiles={true}
+                  showImages={true}
+                />
               </div>
-            ) : (
-              <div className="text-center py-8 md:py-10 text-gray-400">
-                <div className="text-3xl md:text-4xl mb-2">👆</div>
-                <p className="text-sm md:text-base">点击中间卡片查看详情</p>
-              </div>
-            )}
             </div>
           </div>
-
-          {/* 移动端预览：底部抽屉 */}
-          {selectedPage && (
-            <div className="md:hidden fixed inset-x-0 bottom-0 bg-white border-t border-gray-200 p-4 max-h-[50vh] overflow-y-auto shadow-lg z-50">
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">预览</h3>
-              <div className="space-y-2">
-                <div>
-                  <div className="text-xs text-gray-500 mb-1">标题</div>
-                  <div className="text-sm font-semibold text-gray-900">
-                    {selectedPage.outline_content.title}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500 mb-1">要点</div>
-                  <ul className="space-y-1">
-                    {selectedPage.outline_content.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start text-xs text-gray-700">
-                        <span className="mr-1.5 text-banana-500 flex-shrink-0">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </StepLayout>
 
       {ConfirmDialog}
-      {ToastContainer}
+      <ToastContainer />
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />
     </>
   );

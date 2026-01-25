@@ -33,7 +33,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
         
         <div className="space-y-3">
           {currentProject.pages.map((page, index) => (
-            <div key={page.id} className="relative">
+            <div key={`${page.id}-${page.updated_at || index}`} className="relative">
               {/* 多选复选框 */}
               {isMultiSelectMode && page.id && page.generated_image_path && (
                 <button

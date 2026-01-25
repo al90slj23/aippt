@@ -46,20 +46,20 @@ export const Step1FillContent: React.FC = () => {
   const config = {
     idea: {
       title: '一句话生成 PPT',
-      placeholder: '例如：生成一份关于 AI 发展史的演讲 PPT',
-      description: '输入你的想法，AI 将为你生成完整的 PPT',
+      placeholder: '例如：当现代人的审美和和百万年进化的皮肤屏障系统发生冲突，近两百年来人类的生活、工作、环境等发生翻天覆地的改变，而这种改变又和进化了百万年的身体机能版本发生严重的冲突的时候，我们该如何抉择和应对？',
+      description: '输入您的想法和思路，小坊将为您生成完整的 PPT',
       rows: 4,
     },
     outline: {
       title: '从大纲生成 PPT',
       placeholder: '粘贴你的 PPT 大纲...\n\n例如：\n第一部分：AI 的起源\n- 1950 年代的开端\n- 达特茅斯会议\n\n第二部分：发展历程\n...',
-      description: '已有大纲？直接粘贴即可快速生成，AI 将自动切分为结构化大纲',
+      description: '已有大纲？直接粘贴即可快速生成，小坊 将自动切分为结构化大纲',
       rows: 12,
     },
     description: {
       title: '从描述生成 PPT',
       placeholder: '粘贴你的完整页面描述...\n\n例如：\n第 1 页\n标题：人工智能的诞生\n内容：1950 年，图灵提出"图灵测试"...\n\n第 2 页\n标题：AI 的发展历程\n内容：1950年代：符号主义...\n...',
-      description: '已有完整描述？AI 将自动解析出大纲并切分为每页描述，直接生成图片',
+      description: '已有完整描述？小坊 将自动解析出大纲并切分为每页描述，直接生成图片',
       rows: 12,
     },
   };

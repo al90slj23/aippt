@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FileText, Sparkles, Download } from 'lucide-react';
 import { StepLayout, ActionButton, useToast, useConfirm, FilePreviewModal, ProjectResourcesList, Loading } from '@/components/shared';
@@ -26,6 +26,9 @@ export const Step4DetailEditor: React.FC = () => {
   const [isAiRefining, setIsAiRefining] = useState(false);
   const [previewFileId, setPreviewFileId] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false); // 新增：导航 loading 状态
+  const [maxCardWidth, setMaxCardWidth] = useState<number>(0);
+  const [maxCardHeight, setMaxCardHeight] = useState<number>(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // 加载项目数据
   useEffect(() => {
@@ -38,6 +41,46 @@ export const Step4DetailEditor: React.FC = () => {
       }
     }
   }, [projectId, currentProject?.id]);
+
+  // 计算最大卡片宽度和高度
+  useEffect(() => {
+    if (!currentProject?.pages.length) return;
+    
+    // 第一次渲染时，先重置尺寸让卡片自由扩展
+    setMaxCardWidth(0);
+    setMaxCardHeight(0);
+    
+    // 等待 DOM 渲染完成后计算，增加延迟以确保内容完全渲染
+    const timer = setTimeout(() => {
+      let maxWidth = 0;
+      let maxHeight = 0;
+      cardRefs.current.forEach(ref => {
+        if (ref) {
+          // 获取卡片的自然尺寸（包括溢出的内容）
+          const card = ref.querySelector('[class*="p-0"]');
+          if (card) {
+            // 使用 scrollWidth 和 scrollHeight 来获取完整内容的尺寸
+            const width = card.scrollWidth;
+            const height = card.scrollHeight;
+            if (width > maxWidth) {
+              maxWidth = width;
+            }
+            if (height > maxHeight) {
+              maxHeight = height;
+            }
+          }
+        }
+      });
+      if (maxWidth > 0) {
+        setMaxCardWidth(maxWidth);
+      }
+      if (maxHeight > 0) {
+        setMaxCardHeight(maxHeight);
+      }
+    }, 300); // 增加延迟到 300ms
+    
+    return () => clearTimeout(timer);
+  }, [currentProject?.pages, pageDescriptionGeneratingTasks, currentProject?.pages.map(p => p.description_content).join(',')]);
 
   const handleGenerateAll = async () => {
     const hasDescriptions = currentProject?.pages.some(
@@ -225,46 +268,8 @@ export const Step4DetailEditor: React.FC = () => {
         isLoading={isNavigating}
         loadingMessage="正在跳转到图片生成..."
       >
-        {/* 主内容区 - 三栏等高布局 */}
+        {/* 主内容区 - 两栏布局 */}
         <div className="flex-1 flex flex-row min-h-0 pb-20 md:pb-24">
-          {/* 左侧：统计信息 */}
-          <div className="hidden md:flex md:flex-col w-64 bg-white border-r border-gray-100 flex-shrink-0">
-            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide min-h-0">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">统计信息</h3>
-              
-              {/* 完成进度统计 */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl shadow-sm p-5 mb-4 border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-600">完成进度</span>
-                  <FileText size={18} className="text-banana-600" />
-                </div>
-                <div className="text-3xl font-bold text-gray-900">
-                  {completedCount}/{totalCount}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">页已完成</div>
-                
-                {/* 进度条 */}
-                <div className="mt-3 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-banana-400 to-orange-400 h-full rounded-full transition-all duration-500"
-                    style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* 项目资源列表 */}
-              <div className="mt-6">
-                <h4 className="text-sm font-semibold text-gray-700 mb-3">项目资源</h4>
-                <ProjectResourcesList
-                  projectId={projectId || null}
-                  onFileClick={setPreviewFileId}
-                  showFiles={true}
-                  showImages={true}
-                />
-              </div>
-            </div>
-          </div>
-
           {/* 中间：主要内容区域 */}
           <div className="flex-1 p-3 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
             <div className="w-full h-full">
@@ -313,19 +318,34 @@ export const Step4DetailEditor: React.FC = () => {
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 auto-rows-fr">
+                <div 
+                  className="grid gap-4 justify-center"
+                  style={{
+                    gridTemplateColumns: maxCardWidth > 0 ? `repeat(auto-fit, ${maxCardWidth}px)` : 'repeat(auto-fit, minmax(200px, max-content))',
+                    gridAutoRows: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto'
+                  }}
+                >
                   {currentProject.pages.map((page, index) => {
                     const pageId = page.id || page.page_id;
                     return (
-                      <DescriptionCard
-                        key={pageId}
-                        page={page}
-                        index={index}
-                        onUpdate={(data) => updatePageLocal(pageId, data)}
-                        onRegenerate={() => handleRegeneratePage(pageId)}
-                        isGenerating={pageId ? !!pageDescriptionGeneratingTasks[pageId] : false}
-                        isAiRefining={isAiRefining}
-                      />
+                      <div 
+                        key={pageId} 
+                        ref={el => cardRefs.current[index] = el}
+                        className="flex"
+                        style={{ 
+                          width: maxCardWidth > 0 ? `${maxCardWidth}px` : 'max-content',
+                          height: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto'
+                        }}
+                      >
+                        <DescriptionCard
+                          page={page}
+                          index={index}
+                          onUpdate={(data) => updatePageLocal(pageId, data)}
+                          onRegenerate={() => handleRegeneratePage(pageId)}
+                          isGenerating={pageId ? !!pageDescriptionGeneratingTasks[pageId] : false}
+                          isAiRefining={isAiRefining}
+                        />
+                      </div>
                     );
                   })}
                 </div>
@@ -333,20 +353,47 @@ export const Step4DetailEditor: React.FC = () => {
             </div>
           </div>
 
-          {/* 右侧：预览（暂时隐藏，可以后续添加描述预览功能） */}
-          <div className="hidden xl:flex xl:flex-col w-80 bg-white border-l border-gray-100 flex-shrink-0">
-            <div className="flex-1 p-4 md:p-6 overflow-y-auto scrollbar-hide min-h-0">
-              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">描述预览</h3>
-              <div className="text-center py-8 md:py-10 text-gray-400">
-                <div className="text-3xl md:text-4xl mb-2">📝</div>
-                <p className="text-sm md:text-base">点击卡片查看详情</p>
+          {/* 右侧：统计信息 */}
+          <div className="hidden md:flex md:flex-col w-64 bg-white border-l border-gray-100 flex-shrink-0">
+            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide min-h-0">
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">统计信息</h3>
+              
+              {/* 完成进度统计 */}
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl shadow-sm p-5 mb-4 border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-600">完成进度</span>
+                  <FileText size={18} className="text-banana-600" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {completedCount}/{totalCount}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">页已完成</div>
+                
+                {/* 进度条 */}
+                <div className="mt-3 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-banana-400 to-orange-400 h-full rounded-full transition-all duration-500"
+                    style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* 项目资源列表 */}
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">项目资源</h4>
+                <ProjectResourcesList
+                  projectId={projectId || null}
+                  onFileClick={setPreviewFileId}
+                  showFiles={true}
+                  showImages={true}
+                />
               </div>
             </div>
           </div>
         </div>
       </StepLayout>
 
-      {ToastContainer}
+      <ToastContainer />
       {ConfirmDialog}
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />
     </>

@@ -172,7 +172,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                   <div>
                     <h4 className="text-base font-semibold text-gray-900 mb-2">风格描述</h4>
                     <p className="text-sm text-gray-600">
-                      描述您期望的 PPT 整体风格，AI 将根据描述生成相应风格的页面
+                      描述您期望的 PPT 整体风格，小坊 将根据描述生成相应风格的页面
                     </p>
                   </div>
                   <Textarea

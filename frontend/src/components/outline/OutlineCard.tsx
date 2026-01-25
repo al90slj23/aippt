@@ -68,14 +68,15 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
   return (
     <>
       <Card
-        className={`p-4 relative ${
+        className={`p-4 relative flex flex-col ${
           isSelected ? 'border-2 border-banana-500 shadow-yellow' : ''
         }`}
+        style={{ minWidth: '0', width: '100%', height: '100%' }}
         onClick={!isEditing ? onClick : undefined}
       >
         <ShimmerOverlay show={isAiRefining} />
         
-        <div className="flex items-start gap-3 relative z-10">
+        <div className="flex items-start gap-3 relative z-10 flex-1 w-full min-w-0">
           {/* 拖拽手柄 */}
           <div 
             {...dragHandleProps}
@@ -85,25 +86,25 @@ export const OutlineCard: React.FC<OutlineCardProps> = ({
           </div>
 
           {/* 内容区 */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
             {/* 页码和章节 */}
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-sm font-semibold text-gray-900">
+            <div className="flex items-center gap-2 mb-2 flex-shrink-0 overflow-hidden min-w-0">
+              <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">
                 第 {index + 1} 页
               </span>
               {page.part && (
-                <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
+                <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded whitespace-nowrap">
                   {page.part}
                 </span>
               )}
             </div>
 
             {/* 查看模式 */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-gray-900 mb-2 whitespace-nowrap">
                 {page.outline_content.title}
               </h4>
-              <div className="text-gray-600">
+              <div className="text-gray-600 min-w-0 [&_p]:whitespace-nowrap [&_li]:whitespace-nowrap [&_ul]:min-w-0 [&_ol]:min-w-0">
                 <Markdown>{page.outline_content.points.join('\n')}</Markdown>
               </div>
             </div>

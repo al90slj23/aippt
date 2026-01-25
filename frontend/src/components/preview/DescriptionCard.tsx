@@ -59,10 +59,10 @@ export const DescriptionCard: React.FC<DescriptionCardProps> = ({
 
   return (
     <>
-      <Card className="p-0 overflow-hidden flex flex-col">
+      <Card className="p-0 flex flex-col w-full h-full" style={{ minWidth: '0' }}>
         {/* 标题栏 */}
-        <div className="bg-banana-50 px-4 py-3 border-b border-gray-100">
-          <div className="flex items-center justify-between">
+        <div className="bg-banana-50 px-4 py-3 border-b border-gray-100 whitespace-nowrap flex-shrink-0">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="font-semibold text-gray-900">第 {index + 1} 页</span>
               {page.part && (
@@ -76,9 +76,9 @@ export const DescriptionCard: React.FC<DescriptionCardProps> = ({
         </div>
 
         {/* 内容 */}
-        <div className="p-4 flex-1">
+        <div className="p-4 flex-1 min-h-0">
           {generating ? (
-            <div className="space-y-2">
+            <div className="space-y-2" style={{ minWidth: '384px' }}>
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
@@ -87,11 +87,11 @@ export const DescriptionCard: React.FC<DescriptionCardProps> = ({
               </div>
             </div>
           ) : text ? (
-            <div className="text-sm text-gray-700">
+            <div className="text-sm text-gray-700 [&_p]:whitespace-nowrap [&_li]:whitespace-nowrap [&_h1]:whitespace-nowrap [&_h2]:whitespace-nowrap [&_h3]:whitespace-nowrap [&_h4]:whitespace-nowrap [&_ul]:space-y-1 [&_ol]:space-y-1 [&_table]:w-auto [&_td]:whitespace-nowrap [&_th]:whitespace-nowrap [&_td]:px-2 [&_th]:px-2">
               <Markdown>{text}</Markdown>
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-center py-8 text-gray-400" style={{ minWidth: '384px' }}>
               <div className="flex text-3xl mb-2 justify-center"><FileText className="text-gray-400" size={48} /></div>
               <p className="text-sm">尚未生成描述</p>
             </div>
@@ -99,7 +99,7 @@ export const DescriptionCard: React.FC<DescriptionCardProps> = ({
         </div>
 
         {/* 操作栏 */}
-        <div className="border-t border-gray-100 px-4 py-3 flex justify-end gap-2 mt-auto">
+        <div className="border-t border-gray-100 px-4 py-3 flex justify-end gap-2 flex-shrink-0 whitespace-nowrap">
           <Button
             variant="ghost"
             size="sm"

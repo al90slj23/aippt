@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { HomeSimple } from './pages/HomeSimple';
+import { Home } from './pages/Home';
 import { Step1FillContent } from './pages/Step1.FillContent';
 import { Step2SelectTemplate } from './pages/Step2.SelectTemplate';
 import { History } from './pages/History';
@@ -34,9 +34,14 @@ function App() {
 
   return (
     <BrandProvider>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Routes>
-          <Route path="/" element={<HomeSimple />} />
+          <Route path="/" element={<Home />} />
           <Route path="/create" element={<Step1FillContent />} />
           <Route path="/create/step2" element={<Step2SelectTemplate />} />
           <Route path="/project/:projectId/create" element={<Step1FillContent />} />
