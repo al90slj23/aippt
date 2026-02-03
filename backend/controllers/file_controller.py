@@ -41,8 +41,30 @@ def serve_file(project_id, file_type, filename):
         if not os.path.exists(file_path):
             return not_found('File')
         
-        # Serve file
-        return send_from_directory(file_dir, filename)
+        # Serve file with appropriate headers for downloads
+        response = send_from_directory(file_dir, filename, as_attachment=True)
+        
+        # Add additional headers for better compatibility
+        if file_type == 'exports':
+            # Set proper MIME types for export files
+            if filename.endswith('.pptx'):
+                response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            elif filename.endswith('.pdf'):
+                response.headers['Content-Type'] = 'application/pdf'
+            
+            # Force download with proper filename
+            response.headers['Content-Disposition'] = f'attachment; filename="{filename}"'
+            
+            # Add cache control headers
+            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response.headers['Pragma'] = 'no-cache'
+            response.headers['Expires'] = '0'
+            
+            # Add CORS headers for cross-origin downloads
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            response.headers['Access-Control-Expose-Headers'] = 'Content-Disposition'
+        
+        return response
     
     except Exception as e:
         return error_response('SERVER_ERROR', str(e), 500)

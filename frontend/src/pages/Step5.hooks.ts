@@ -97,8 +97,8 @@ export const useExportHandlers = (
   const handleExport = useCallback(async (
     type: 'pptx' | 'pdf' | 'editable-pptx',
     pageIds?: string[]
-  ) => {
-    if (!projectId) return;
+  ): Promise<string | null> => {
+    if (!projectId) return null;
     
     const exportTaskId = `export-${Date.now()}`;
     
@@ -118,7 +118,7 @@ export const useExportHandlers = (
             downloadUrl,
             pageIds: pageIds,
           });
-          window.open(downloadUrl, '_blank');
+          return downloadUrl;
         }
       } else if (type === 'editable-pptx') {
         addTask({
@@ -147,6 +147,8 @@ export const useExportHandlers = (
           
           pollExportTask(exportTaskId, projectId, taskId);
         }
+        // 可编辑PPTX是异步任务，不立即返回下载链接
+        return null;
       }
     } catch (error: any) {
       addTask({
@@ -160,6 +162,7 @@ export const useExportHandlers = (
       });
       show({ message: normalizeErrorMessage(error.message || '导出失败'), type: 'error' });
     }
+    return null;
   }, [projectId, addTask, pollExportTask, show]);
 
   return { handleExport };
